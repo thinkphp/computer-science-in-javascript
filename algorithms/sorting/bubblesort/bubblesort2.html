@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title>Bubble Sort implementation in JavaScript</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+/*
+ Bubble Sort Implementation in JavaScript 
+*/
+
+//Design Pattern Module Pattern
+
+var Cehov = (function() {
+
+    //private data
+    var _vec = [], _len = -1,
+
+       /**
+        * @private method _swap
+        * @param a (int) index of first item to swap
+        * @param b (int) index of second item to swap
+        * @return void
+        */
+      _swap = function(a, b) {
+
+           temp = _vec[ a ]
+
+           _vec[ a ] = _vec[ b ]
+
+           _vec[ b ] = temp
+      }
+
+
+    //public data methods
+    return {
+
+           init: function( arr ) {
+
+                 _vec = arr
+ 
+                 _len = arr.length
+           },
+
+           sort: function() {
+
+                 var i,
+
+                     j,
+
+                     N = _len,
+
+                     swapped = true;
+
+                     //counting down i
+                     for(i = N - 1; i > 0 && swapped;i--) {
+
+                         swapped = false 
+
+                        //counting down j
+                        for(j = N - i; j > 0; j--) {
+
+                           if(_vec[ j ] < _vec[j - 1]) {
+
+                               _swap(j, j - 1) 
+
+                               swapped = true
+                           }
+                     } 
+             }                
+
+           }, 
+
+           get: function() {
+
+                return _vec
+           }
+    }
+
+})();
+
+//Driver Program to test
+Cehov.init([3,2,1,0,-1,-2,-3])
+Cehov.sort()
+console.log("Cehov said => " + Cehov.get())
+
+//Now looking at another example using Object Literal Notation
+var Tolstoi = {
+
+    vec: [],
+
+    len: -1,
+
+    init: function( arr ){
+          this.vec = arr
+          this.len = arr.length
+    },
+
+    sort: function() {
+
+          var i,
+
+              j,
+
+              N = this.len,
+
+              swapped = true;
+
+              //counting down i
+              for(i = N - 1; i > 0 && swapped;i--) {
+
+                  swapped = false 
+
+                  //counting down j
+                  for(j = N - i; j > 0; j--) {
+
+                      if(this.vec[ j ] < this.vec[j - 1]) {
+
+                               this._swap(j, j - 1) 
+
+                               swapped = true
+                      }
+                  } 
+              }                
+    },
+
+
+    _swap:function(a,b) {
+
+       var temp = this.vec[ a ]
+           this.vec[ a ] = this.vec[ b ]
+           this.vec[ b ] = temp   
+
+    },
+    get: function() {
+
+         return this.vec
+    }
+};
+
+//Driver Program to test
+Tolstoi.init( [9,8,7,6,5,4,3,2,1,0] )
+Tolstoi.sort()
+console.log('Output => ' + Tolstoi.get())
+
+</script>
+</head>
+<body>
+</body>
+</html>
+

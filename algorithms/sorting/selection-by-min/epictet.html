@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title>Selection by Min Sort for the Win</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+
+   var arr = [-1,-2,-3,9,8,7,6,5,4,3,2,1,0]
+
+   function Epictet( input ) {
+             
+            this.vec = [];
+
+            this.vec = input
+
+            this.n = input.length
+   }  
+
+   Epictet.prototype.sort = function() {
+
+            var i, j, n =  this.n, min, posMin;
+
+            for(i=0;i<n-1;i++) {
+
+                min = this.vec[i]
+
+                posMin = i;
+
+                for(j=i+1;j<n;j++) {
+
+                    if(this.vec[j]<min) {
+
+                       min = this.vec[j]
+
+                       posMin = j   
+                    }
+                }  
+
+                this.vec[posMin] = this.vec[i]
+
+                this.vec[i] = min
+            } 
+   }
+
+   Epictet.prototype.get = function() {
+
+            return this.vec
+   }
+
+/*
+   var obj = new Epictet( arr )
+
+       obj.sort()
+ 
+       console.log(obj.get())
+
+*/
+
+
+var Epictet2 = function() {
+
+    //define a private vector
+    var vec = [], 
+
+        //define the number of elements, I mean the length of the array
+        n;
+
+        //init function on which we can initialize the elements of the array, a way of setter
+        function init( newarr ) {
+  
+                 //assign our vec to new vector
+                 vec = newarr
+
+                 //compute the length of the vector
+                 n = vec.length
+        }
+
+        //getter method
+        function get() {
+
+             //return our array. that is private
+             return vec  
+        }
+
+        //the main function that do the action selection by min
+        function selectionByMin() {
+
+             var min, posMin;
+
+             //we observe that the variable i goes from zero to n-1
+             for(var i=0;i<n-1;i++) {
+
+
+                 //let min first element, then the next and so forth
+                 min = vec[i]
+
+                 //stored the possition of the min
+                 posMin = i
+
+                 //iterate from the next i to the last element of the array
+                 //and check if one element if less than our min, and afirmative stored min and pozMin
+                 for(var j=i+1;j<n;j++) {
+  
+                       if(vec[j]<min) {
+ 
+                          min = vec[j]
+                          posMin = j
+                       }  
+                 } 
+
+                 vec[posMin] = vec[i]
+
+                 vec[i] = min  
+               
+             }  
+
+        }
+ 
+return{get: get, init: init, sort: selectionByMin}
+}()
+
+/*
+Epictet2.init( arr )
+
+Epictet2.sort()
+
+alert(Epictet2.get())
+*/
+
+
+//Object Literal Notation
+var Epictet = {
+
+    vec: [],
+
+    len: -1,
+
+    init: function( arr ) {
+
+          this.vec = arr
+
+          this.len = arr.length  
+
+    },
+
+    sort: function() {
+
+          var min, posmin, 
+              i, j,
+              n = this.len;
+
+
+          for(i=0;i<n-1;i++) {
+
+              min = this.vec[i]
+
+              posmin = i
+
+              for(j=i+1;j<n;j++) {
+
+                  if(this.vec[j] <= min) {
+
+                     min = this.vec[j]
+                     posmin = j 
+                  } 
+              }
+
+              this.vec[posmin] = this.vec[i]
+
+              this.vec[i] = min
+               
+          }   
+    },
+
+    get: function() {
+
+         return this.vec
+    }   
+}
+
+Epictet.init( arr )
+
+Epictet.sort()
+
+alert(Epictet.get())
+
+</script>
+</head>
+<body>
+</body>
+</html>
+

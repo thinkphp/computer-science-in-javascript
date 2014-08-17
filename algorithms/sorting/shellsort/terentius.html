@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title>Shell Sort for Open Minded</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+
+   var arr = [-1,-2,-3,9,8,7,6,5,4,3,2,1,0]
+
+
+   //Prototypal Method using New
+   function Terentius() {
+
+            this.vec = []
+
+            this.len = -1
+
+            this.distances = [7,5,3,1]
+   }
+
+   Terentius.prototype.set = function( newArr ) {
+
+            this.vec = newArr
+
+            this.len = newArr.length
+   }
+
+   Terentius.prototype.sort = function() {
+
+            var dis = this.distances, m = dis.length, k, aux, n = this.len;
+
+            for(var d=0;d<m;d++) {
+
+                k = this.distances[d]
+
+                for(var i=k;i<n;i++) {
+
+                    aux = this.vec[i]
+
+                    for(var j=i-k;(j>=0 && this.vec[j]>aux);j-=k) {
+
+                            this.vec[j+k] = this.vec[j]
+                         
+                    } 
+
+                            this.vec[j+k] = aux
+                    
+                }  
+            }
+   }
+
+   Terentius.prototype.get = function() {
+
+             return this.vec 
+   }
+
+/*
+    
+   //step 1
+   //created an object Terentius
+   var obj = new Terentius() 
+
+       //step 2
+       //set up an array to sort
+       obj.set( arr )
+
+       //step 3
+       //call the method of sorting
+       obj.sort()
+
+        //and step 4 
+       //and then display the sorted array
+       console.log( obj.get())
+*/
+
+//Using Module Pattern for Shell Sorting
+var Petronius = function(){
+
+    var vec = [], len = -1, dist = [7,5,3,1]; 
+
+    function init( arr ) {
+
+             vec = arr
+             len = vec.length 
+    } 
+
+    function get() {
+
+          return vec
+    }
+
+    function shell() {
+
+             //for each distance do
+             for(var d=0;d<4;d++) {
+
+                 //mark the accurate distance
+                 var x = dist[d]
+
+                 //iterate from first distance to end
+                 for(var i=x;i<len;i++) {
+
+                     //marked the corresponding element
+                     var aux = vec[i]
+
+                     for(var j=i-x;(j>=0 && vec[j]>aux);j-=x) {
+
+                           vec[j+x] = vec[j]
+                     } 
+
+
+                     vec[j+x] = aux 
+
+                 }
+             } 
+    }
+
+    return {set: init, get: get, sort: shell} 
+}()
+
+/*
+Petronius.set( arr )
+
+Petronius.sort()
+
+alert(Petronius.get())
+*/
+
+//Using Object Literal Notation
+var Marcus_Aurelius = {
+
+    vec: [],
+
+    dist: [7,5,3,1],
+
+    len: -1,
+
+    set: function( arr ) {
+
+         this.vec = arr
+
+         this.len = arr.length
+    },
+
+    get: function() {
+
+         return this.vec
+    },
+
+    shell: function() {
+
+           var n = this.len
+
+           for(var d=0;d<4;d++) {
+
+               var x = this.dist[d]
+
+               for(var i=x;i<n;i++) {
+
+                   var aux = this.vec[i] 
+
+                   for(var j=i-x;(j>=0 && this.vec[j]>aux);j-=x) {
+                      
+                       this.vec[j+x] = this.vec[j] 
+                   }
+
+                   this.vec[j+x] = aux 
+               }
+
+           } 
+    }
+}
+
+Marcus_Aurelius.set(arr)
+
+Marcus_Aurelius.shell()
+
+console.log(Marcus_Aurelius.get())
+
+</script>
+</head>
+<body>
+</body>
+</html>
+

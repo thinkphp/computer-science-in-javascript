@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title>QuickSort For The Win</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+
+//Classical Pattern with new operator
+function Plautus () {
+
+        this.vec = []
+
+        this.k = 0
+}
+
+Plautus.prototype.set = function( arr ) {
+
+        this.vec = arr
+
+        this.n = arr.length;
+}
+
+Plautus.prototype.sort = function() {
+
+        this._qs(0,this.n-1)
+}
+
+Plautus.prototype._qs = function(li,ls) {
+
+        if(li < ls) {
+
+             this._getpos(li,ls)
+
+             this._qs(li,this.k-1)
+
+             this._qs(this.k+1,ls)
+        }
+}
+
+Plautus.prototype._getpos = function(li,ls) {
+
+        var i = li, j = ls, aux, i1 = 0, j1 = -1;
+
+        while(i<j) {
+
+              if(this.vec[i] > this.vec[j]) {
+               
+                 aux = this.vec[i]
+                 this.vec[i] = this.vec[j]
+                 this.vec[j] = aux
+
+                 aux = i1
+                 i1 = -j1
+                 j1 = -aux     
+              }  
+
+           i = i + i1
+           j = j + j1
+        }   
+
+     this.k = j
+}
+
+Plautus.prototype.get = function() {
+
+     return this.vec  
+}
+
+
+var obj = new Plautus()
+
+    obj.set([9,8,7,6,5,4,3,2,1,0])
+
+    console.log('Input' +  obj.get() )
+
+    obj.sort()
+
+    console.log('Output - sorted: '+ obj.get() )
+
+//Module Pattern
+var Petronius = function() {
+ 
+    var vec = [],
+
+        k = 0, 
+
+        n;
+
+        function set( arr ) {
+
+            vec = arr 
+
+            n = arr.length
+        } 
+
+        function sort() {
+
+            _divimp(0, n-1) 
+        }
+
+        function _divimp(li,ls) {
+
+            if(li<ls) {
+
+                  _getpos(li,ls)
+
+                  _divimp(li,k-1)
+
+                  _divimp(k+1,ls)  
+            }  
+        }
+
+        function _getpos(li,ls) {
+
+             var i = li, j = ls, aux, i1 = 0, j1 = -1;
+
+             while(i<j) {
+
+               if(vec[i]>vec[j]) {
+
+                  aux = vec[i]
+                  vec[i] = vec[j]
+                  vec[j] = aux
+
+                  aux = i1
+                  i1 = -j1
+                  j1 = -aux 
+               }
+
+               i = i + i1
+               j = j + j1 
+             }
+
+           k = i 
+        }
+
+        function get() {
+
+             return vec;
+        }
+
+return {init: set, sort: sort, get: get, init: set}
+}()
+
+
+Petronius.init([9,8,7,6,5,4,3,2,1,0])
+
+Petronius.sort()
+
+console.log(Petronius.get())
+
+
+//Object Notation
+var Dante = {
+
+    vec: [],
+
+    k: 0,
+
+    n: 0,
+
+    set: function( arr ) {
+
+         this.vec = arr 
+
+         this.n = arr.length
+    },
+
+    get: function() {
+
+         return this.vec
+    },
+
+    sort: function() {
+
+          this._qs(0, this.n - 1) 
+    },
+
+    _qs: function(li, ls) {
+
+         if(li<ls) {
+
+            this._getpos(li,ls)
+            this._qs(li, this.k-1)
+            this._qs(this.k+1,ls)  
+         } 
+    },
+
+    _getpos: function(li,ls) {
+
+        var i = li, j = ls, aux, i1 = 0, j1 = -1;
+
+        while(i<j) {
+
+          if(this.vec[i] > this.vec[j]) {
+
+             aux = this.vec[i]
+             this.vec[i] = this.vec[j]   
+             this.vec[j] = aux  
+
+             aux = i1
+             i1 = -j1
+             j1 = -aux
+          }
+
+          i = i + i1
+          j = j + j1
+        } 
+
+        this.k = i 
+    }
+
+}
+
+Dante.set([9,8,7,6,5,4,3,2,1,0])
+
+console.log('Input -> ' + Dante.get() )
+
+Dante.sort()
+
+console.log('Output ->' +  Dante.get() )
+    
+</script>
+</head>
+<body>
+</body>
+</html>
+

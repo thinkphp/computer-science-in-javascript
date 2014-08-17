@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title>QuickSort For The Win</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+
+var Borges = function(){
+
+    var arr = [],
+
+        n = 0, 
+
+        p;
+
+    function init( vec ) {
+
+       arr = vec    
+
+       n = vec.length
+    }
+
+    function _pos(li, ls) {
+
+             var i = li,
+
+                 j = ls,
+
+                 i1 = 0,
+
+                 j1 = -1,
+
+                 aux;  
+
+             while(i<j) {
+
+                  if(arr[i]>arr[j]){
+
+                     aux = arr[i]   
+                     arr[i] = arr[j]                      
+                     arr[j] = aux
+
+                     aux = i1
+                     i1 = -j1
+                     j1 = -aux 
+                  }   
+
+               i = i + i1
+               j = j + j1
+             }
+
+        p = i 
+    }
+
+
+    function _quick(li, ls) {
+
+            if( li < ls ) {
+
+                _pos(li, ls)
+                
+                _quick(li, p - 1) 
+
+                _quick(p + 1, ls)
+            }
+    }
+
+    function quicksort() {
+
+             _quick(0, n-1)
+    }
+
+    function get() {
+
+        return arr 
+    }
+     
+    return {init: init, qs: quicksort, get: get}
+}()
+
+var arr = [9,8,7,6,5,4,3,2,1,0]
+
+
+Borges.init( arr )
+Borges.qs()
+
+alert(Borges.get())
+</script>
+</head>
+<body>
+</body>
+</html>
+

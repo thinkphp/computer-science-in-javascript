@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title>Merge Sort Sorting</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+
+//merge sort using Divide et Impera
+function Platon() {
+
+     this.vec = []
+     this.len = -1
+}
+
+Platon.prototype = {
+
+     constructor: Platon,
+
+     set: function( arr ) {
+ 
+          this.vec = arr
+
+          this.len = arr.length  
+     },
+
+     get: function() {
+
+          return this.vec
+     },
+
+     sort: function() {
+
+           this.divimp(0,this.len-1) 
+     },
+
+     divimp: function(li,ls) {
+ 
+             if(li == ls) return
+ 
+             var middle = Math.floor((li+ls)/2)  
+
+                 this.divimp(li,middle)
+
+                 this.divimp(middle+1,ls)
+
+                 this._merge(li,middle,ls)
+
+     },
+
+     _merge: function(li, m, ls) {
+
+             var i = li, j = m + 1, temp = [], k = li
+
+             for(var s=li; s<=ls; s++) {
+
+                 temp[ s ] = this.vec[ s ]
+             } 
+             
+             while(i<=m && j<=ls) {
+
+                   if(temp[i] < temp[j]) {
+
+                      this.vec[k++] = temp[i++]  
+
+                   } else {
+
+                      this.vec[k++] = temp[j++] 
+                   }
+             } 
+
+             for(var p=i;p<=m;p++) {
+
+                 this.vec[k++] = temp[p]                 
+             }
+
+             for(var p=j;p<=ls;p++) {
+
+                 this.vec[k++] = temp[p]                 
+             }
+     }
+}
+
+    console.log('Merge Sort')
+
+var myArr = [9,8,7,6,5,4,3,2,1,0]
+
+var obj = new Platon()
+
+    obj.set( myArr )
+
+    obj.sort()
+
+    console.log(obj.get())
+
+</script>
+</head>
+<body>
+</body>
+</html>
+

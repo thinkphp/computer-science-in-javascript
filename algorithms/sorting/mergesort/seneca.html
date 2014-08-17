@@ -1,0 +1,334 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title>Merge Sort for the Win</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+
+
+//Prototypal method
+function Seneca() {
+
+         this.vec = []
+       
+         this.n = 0 
+}
+
+Seneca.prototype.get = function() {
+
+         return this.vec
+}
+
+
+Seneca.prototype.set = function( arr ) {
+
+         this.vec = arr
+
+         this.n = arr.length
+}
+
+Seneca.prototype.sort = function() {
+
+       this._divimp(0,this.n-1)  
+}
+
+Seneca.prototype._bubble = function(i,j) {
+
+       if(this.vec[i] > this.vec[j]) {
+
+           var aux = this.vec[i]
+               this.vec[i] = this.vec[j]
+               this.vec[j] = aux 
+       }
+}
+
+Seneca.prototype._divimp = function(li, ls) {
+
+ 
+       if( (ls-li) <= 1) {
+
+               this._bubble(li,ls) 
+
+       } else {
+
+           var middle = parseInt((li+ls)/2)
+
+               this._divimp(li,middle)
+
+               this._divimp(middle+1,ls)
+
+               this._merge(li,middle,ls)                
+       }
+}
+
+Seneca.prototype._merge = function(li,m,ls) {
+
+       var i = li, j = m + 1, aux = [], k = 0;
+
+       while(i<=m && j<=ls) {
+
+             if(this.vec[i] < this.vec[j]) {
+                 
+                aux[k++] = this.vec[i++]    
+
+             } else {
+
+                aux[k++] = this.vec[j++]    
+             }
+       }
+
+       if(i<=m) {
+
+             for(var r1=i;r1<=m;r1++) {
+
+                 aux[k++] = this.vec[r1]  
+             }
+
+       } else {
+
+             for(var r2=j;r2<=ls;r2++) {
+
+                 aux[k++] = this.vec[r2]  
+             }
+       }
+
+       k = 0
+
+       for(var p=li;p<=ls;p++) {
+
+           this.vec[p] = aux[k++] 
+       } 
+}
+
+
+//1 2 3 4 5 
+var obj = new Seneca()
+
+    obj.set([9,8,7,6,5,4,3,2,1,0])
+
+    obj.sort()
+
+    console.log(obj.get())
+
+
+//Module Pattern
+var Seneca = function(){
+
+    var vec = [], n = 0;
+
+    function init( arr ) {
+
+             vec = arr
+
+             n = arr.length  
+    }
+
+    function sort() {
+
+             _divimp(0,n-1)
+    }
+
+    function _divimp(li,ls) {
+
+
+             if((ls-li)<=1) {
+
+                _sort(li,ls)
+                 
+             } else {
+
+                var middle = parseInt((li+ls)/2)
+
+                    _divimp(li,middle)
+                    _divimp(middle+1,ls)
+                    _merge(li,middle,ls) 
+             }
+    } 
+
+    function _sort(i,j) {
+
+            if(vec[i]>vec[j]) {
+
+                  var aux = vec[i]
+                      vec[i] = vec[j]
+                      vec[j] = aux 
+            }  
+    } 
+
+    function _merge(li,m,ls) {
+
+            var i = li, j = m+1, out = [], k = 0; 
+
+
+            while(i<=m && j<=ls) {
+
+                  if(vec[i]<vec[j]) {
+
+                     out[k++] = vec[i++]
+
+                  } else {
+
+                     out[k++] = vec[j++]
+                    
+                  }   
+            }
+
+            if(i<=m) {
+
+               for(var p1=i;p1<=m;p1++) {
+                     
+                   out[k++] = vec[p1] 
+               }     
+
+            } else {
+
+               for(var p1=i;p1<=m;p1++) {
+                     
+                   out[k++] = vec[p1] 
+               }     
+
+            } 
+
+            k = 0
+
+            for(var sol=li;sol<=ls;sol++) {
+
+                vec[sol] = out[k++]
+            } 
+    }
+
+    function get() {
+
+             return vec
+    }
+
+return {setVec: init, getVec: get, sort: sort}
+
+}()
+
+Seneca.setVec([9,8,7,6,5,4,3,2,1,0])
+
+Seneca.sort()
+
+console.log( Seneca.getVec() )
+
+
+
+//I am using Literal Object Notation
+var Gogol = {
+
+    //set up an array for init
+    vec: [],
+
+    //number of elements
+    n: 0,
+
+    init: function( arr ) {
+          
+          //set vec with new arr 
+          this.vec = arr
+
+          //compute the length of the new array
+          this.n = arr.length
+
+    },
+
+    sort: function() {
+
+          //doing a method of sort
+          this._divimp(0, this.n-1) 
+    },
+
+    _divimp: function(li, ls) {
+
+             if((ls-li)<=1) {
+
+                 this._simplestSort(li,ls)
+
+             } else {
+
+                 var middle = parseInt((li+ls)/2)  
+
+                     this._divimp(li,middle)
+                     this._divimp(middle+1,ls)   
+                     this._mergeArray(li,middle,ls)
+             }
+    },
+
+    _simplestSort: function(i,j) {
+
+             if(this.vec[i]>this.vec[j]) {
+
+                var aux = this.vec[i]
+                    this.vec[i] = this.vec[j]
+                    this.vec[j] = aux 
+             } 
+
+    },
+
+    _mergeArray: function(li,m,ls) {
+
+             var i = li, 
+                 j = m+1, 
+                 aux = [], 
+                 k = 0;
+
+                 while(i<=m && j<=ls) {
+
+                       if(this.vec[i]<this.vec[j]) {
+ 
+                          aux[k++] = this.vec[i++]
+ 
+                       } else {
+
+                          aux[k++] = this.vec[j++]
+                       }
+                 }
+
+
+                 if(i<=m) {
+
+                    for(var w=i;w<=m;w++) {
+
+                        aux[k++] = this.vec[w]
+                    } 
+
+                 } else {
+
+                    for(var w=j;w<=ls;w++) {
+
+                        aux[k++] = this.vec[w]
+                    } 
+                 }   
+
+                 k = 0
+
+                 for(var index=li;index<=ls;index++) {
+
+                     this.vec[index] = aux[k++]
+                 } 
+    },
+ 
+    get: function() {
+
+         return this.vec  
+    }
+
+        
+}//end Object
+
+Gogol.init([9,8,7,6,5,4,3,2,1,0])
+
+Gogol.sort()
+
+console.log(Gogol.get())
+
+    
+</script>
+</head>
+<body>
+</body>
+</html>
+

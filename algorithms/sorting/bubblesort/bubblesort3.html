@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Bubble Sort Implementation in JavaScript</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <style>
+  body{font-family: arial,verdana,sans-serif;font-size: 30px}
+  input{border: 1px solid #ccc;font-size: 40px;text-align: center;padding: 4px;margin: 5px}
+  input:focus{background: #E0FFB0;text-align:center}
+  </style>
+  <script type="text/javascript">
+
+  var Dom = {
+
+      addEvent: function(elem, evType, handler, useCapture) {
+
+                if( elem.addEventListener ) {
+
+                   elem.addEventListener(evType, handler, useCapture);
+
+                } else if ( elem.attachEvent ) {
+
+                   elem.attachEvent('on'+evType, handler)
+
+                } else {
+
+                   elem['on'+evType] = handler
+                }
+      }
+  };
+
+  var $ = function( id ){return document.getElementById( id )}
+
+  var wittgenstein = (function() {
+
+      var _vec = [],
+          _len = -1,
+          _swap = function(i,j) {
+                  temp=_vec[i]
+                  _vec[i] = _vec[j]
+                  _vec[j] = temp 
+          },
+      _swaps = 0,
+      _comparisons = 0
+
+      return {
+             init: function( arr ) {
+
+                   _vec = arr
+                   _len = _vec.length  
+             },
+             sort: function() {
+
+                   var i,j,n=_len,
+
+                       swap=true
+
+                   for(i=0;i<n-1;i++) {
+
+                       swap = false
+
+                       for(j=0;j<n-i-1;j++) {
+
+                           _comparisons++ 
+
+                           if(_vec[j]>_vec[j+1]) {
+
+                              _swap(j,j+1)
+
+                              swap = true
+
+                              _swaps++
+                           }
+                       }
+                       if(!swap){
+                           break
+                       } 
+                   }
+             },
+             get: function() {
+                  return _vec
+             },
+
+             getComparisons: function() {
+                  return _comparisons
+             },
+
+             getSwaps: function() {
+                  return _swaps
+             }   
+
+      }  
+
+  })();
+  
+
+  function solve( input ) {
+
+           wittgenstein.init(input)
+
+           wittgenstein.sort()
+
+           $('output').innerHTML = 'Sorted Input -> ' + wittgenstein.get()
+           $('swaps').innerHTML = 'Comparisons -> ' + wittgenstein.getComparisons()
+           $('comparisons').innerHTML = 'Swaps -> ' + wittgenstein.getSwaps()
+ 
+  }
+
+
+  function init() {
+
+      Dom.addEvent($('solve'),'click', function(){
+ 
+          var input = $('input').value,_input = []
+ 
+              input = input.split(",")
+
+              for(var i=0;i<input.length;i++){
+
+                  _input.push(parseInt(input[i]))
+              }
+
+              solve( _input )
+ 
+      }, false)          
+  }
+
+  Dom.addEvent(window,'load',init, false)
+
+  </script>
+</head>
+<body>
+<center>
+<h1>Bubble Sort O(N^2) time</h1>
+<input type="text" name="input" id="input" /><input type="button" name="solve" id="solve" value="Sort" />
+<p id="output"></p>
+<p id="swaps"></p>
+<p id="comparisons"></p>
+</center>
+</body>
+</html>

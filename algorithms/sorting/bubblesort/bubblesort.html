@@ -1,0 +1,237 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title>Bubble Sort implementation in JavaScript</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+/*
+ Bubble Sort Implementation in JavaScript 
+*/
+
+//OOP Prototypal Approach
+
+/*
+ * @param arr Array
+ */
+function BubbleSort( vec ) {
+
+    if(arr != null) {
+
+         this.arr = vec
+ 
+         this.len = vec.length
+    }
+}
+/*
+ * The bubble sort algorithm that solves this problem has O(N^2) time complexity in worst case, O(N) time and O(N^2) average time. 
+ * in-place approach using the DO...While
+ */
+BubbleSort.prototype.sort = function() {
+
+           var i,
+
+               j = -1,
+
+               swapped = false,
+
+               n = this.len,
+
+              /*
+               * @param a (Integer) the index of first item to swap
+               * @param b (Integer) the index of the second item to swap
+               * @return void  
+               */
+              _swap = function(a, b) {
+
+                   var temp = this.arr[a]
+                   this.arr[a] = this.arr[b]
+                   this.arr[b] = temp
+               }
+
+           do {
+
+              swapped = false
+
+              j++
+
+              for(i = 0; i < n - j; i++) {
+
+                  if(this.arr[ i ] > this.arr[ i + 1]) {
+
+                     _swap(i, i + 1)
+
+                     swapped = true
+                  }
+              }
+
+           }while( swapped )
+}
+
+/**
+ *  @public setter method
+ *  @param arr Array
+ */
+BubbleSort.prototype.set = function( arr ) {
+
+           this.vec = arr
+
+           this.len = arr.length 
+}
+
+/**
+ *  @public getter method
+ *  @param void
+ *  @return an array of items the sorted array
+ */
+BubbleSort.prototype.get = function() {
+
+           return this.arr
+}
+
+//input data
+var arr = [-1,-2,-3,9,8,7,6,5,4,3,2,1,0]
+
+var ob = new BubbleSort( arr )
+
+    console.log('input => ' + ob.get())
+
+    ob.sort()
+
+    console.log('output => ' + ob.get())
+
+
+//Module Pattern
+var Dostoievski = function() {
+
+    //our attributes, an array of items, init []
+     var arr = [],
+
+     //number of elements
+     N = -1;
+
+ function init( vec ) {
+
+          //assign
+          arr = vec
+
+          //get the length of the array
+          N = vec.length 
+ }
+
+ //gettter
+ function get() {
+
+       return arr
+ }
+ 
+ //the bubble sort algorithm
+ function sort() {
+
+       var i,
+           j, 
+           //take a var that indicates whether is swapped or not
+           swapped = true
+
+
+       for(i = 0; i < N && swapped; i++) {
+
+           swapped = false 
+
+           for(j = 0; j < N - i; j++) {
+
+               if(arr[ j ] > arr[ j + 1 ]) {
+
+                  _swap(j, j + 1)
+
+                  swapped = true
+               }  
+           }
+       }  
+ }
+
+  /**
+   * @private Function Swap
+   * @param a (Integer) the index of first item to swap
+   * @param b (Integer) the index of the second item to swap
+   * @return void  
+   */
+  //private function to swap two elements
+  function _swap(a, b) {
+
+       var temp = arr[a ]
+           arr[ a ] = arr[ b ]
+           arr[ b ] = temp   
+  }
+
+  return{init: init,sort: sort,get:get}
+}();
+
+Dostoievski.init( [3,2,1,0,-1,-2,-3] )
+Dostoievski.sort()
+console.log("Output => " + Dostoievski.get())
+
+
+//Object Literal 
+var Tolstoi = {
+
+    vec: [],
+
+    len: -1,
+
+    init: function( arr ){
+          this.vec = arr
+          this.len = arr.length
+    },
+
+    sort: function() {
+
+          var i,
+
+              j,
+
+              N = this.len,
+
+              swapped = true;
+
+              for(i = 0; i < N && swapped; i++) {
+
+                  swapped = false
+
+                  for(j = N - 1; j >= i; j--) {
+
+                      if(this.vec[j] < this.vec[j-1]) {
+
+                         this._swap(j, j - 1)
+
+                         swapped = true
+                      }
+                  } 
+              }                
+    },
+
+
+    _swap:function(a,b) {
+
+       var temp = this.vec[ a ]
+           this.vec[ a ] = this.vec[ b ]
+           this.vec[ b ] = temp   
+
+    },
+    get: function() {
+
+         return this.vec
+    }
+};
+
+Tolstoi.init( [3,2,1,0,-1,-2,-3,90,23,-22] )
+Tolstoi.sort()
+console.log('Output => ' + Tolstoi.get())
+
+</script>
+</head>
+<body>
+</body>
+</html>
+

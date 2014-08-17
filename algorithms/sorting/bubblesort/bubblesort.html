@@ -6,11 +6,12 @@
 <style type="text/css">
 </style>
 <script type="text/javascript">
+
 /*
  Bubble Sort Implementation in JavaScript 
 */
 
-//OOP Prototypal Approach
+/* OOP Prototypal Approach */
 
 /*
  * @param arr Array
@@ -25,14 +26,16 @@ function BubbleSort( vec ) {
     }
 }
 /*
- * The bubble sort algorithm that solves this problem has O(N^2) time complexity in worst case, O(N) time and O(N^2) average time. 
+ * The bubble sort algorithm that solves this problem has 
+ * O(N^2) time complexity in worst case, 
+ * O(N) time in best case and O(N^2) average time. 
  * in-place approach using the DO...While
  */
 BubbleSort.prototype.sort = function() {
 
            var i,
 
-               j = -1,
+               j = 0,
 
                swapped = false,
 
@@ -58,7 +61,7 @@ BubbleSort.prototype.sort = function() {
 
               for(i = 0; i < n - j; i++) {
 
-                  if(this.arr[ i ] > this.arr[ i + 1]) {
+                  if(this.arr[ i ] > this.arr[ i + 1 ]) {
 
                      _swap(i, i + 1)
 
@@ -93,6 +96,7 @@ BubbleSort.prototype.get = function() {
 //input data
 var arr = [-1,-2,-3,9,8,7,6,5,4,3,2,1,0]
 
+//driver program to test
 var ob = new BubbleSort( arr )
 
     console.log('input => ' + ob.get())
@@ -130,16 +134,17 @@ var Dostoievski = function() {
  function sort() {
 
        var i,
+
            j, 
-           //take a var that indicates whether is swapped or not
+           //take a flag that indicates whether is swapped or not.
            swapped = true
 
 
-       for(i = 0; i < N && swapped; i++) {
+       for(i = 0; i < N - 1 && swapped; i++) {
 
            swapped = false 
 
-           for(j = 0; j < N - i; j++) {
+           for(j = 0; j < N - i - 1; j++) {
 
                if(arr[ j ] > arr[ j + 1 ]) {
 
@@ -165,7 +170,7 @@ var Dostoievski = function() {
            arr[ b ] = temp   
   }
 
-  return{init: init,sort: sort,get:get}
+  return{init: init, sort: sort, get: get}
 }();
 
 Dostoievski.init( [3,2,1,0,-1,-2,-3] )
@@ -173,18 +178,22 @@ Dostoievski.sort()
 console.log("Output => " + Dostoievski.get())
 
 
-//Object Literal 
+//Object Literal Notation
 var Tolstoi = {
 
+    //data member
     vec: [],
 
+    //the length of the array
     len: -1,
 
+    //init function
     init: function( arr ){
           this.vec = arr
           this.len = arr.length
     },
 
+    //this method solves the problem
     sort: function() {
 
           var i,
@@ -195,11 +204,11 @@ var Tolstoi = {
 
               swapped = true;
 
-              for(i = 0; i < N && swapped; i++) {
+              for(i = 0; i < N - 1 && swapped; i++) {
 
                   swapped = false
 
-                  for(j = N - 1; j >= i; j--) {
+                  for(j = N - 1; j > i; j--) {
 
                       if(this.vec[j] < this.vec[j-1]) {
 
@@ -211,7 +220,10 @@ var Tolstoi = {
               }                
     },
 
-
+     //an utility function to swap two items of array
+     //@param a (integer) index of first item
+     //@param b (integer) index of second item
+     //@return void
     _swap:function(a,b) {
 
        var temp = this.vec[ a ]

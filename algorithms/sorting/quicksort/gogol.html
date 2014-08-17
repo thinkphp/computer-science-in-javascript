@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title>Gogol and Socrate in QuickSort</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+
+var Gogol = {
+
+    vec: [],
+
+    len: -1,
+
+
+    _swap: function(i,j) {
+
+           var temp;
+
+               temp = this.vec[i]
+               this.vec[i] = this.vec[j]
+               this.vec[j] = temp 
+
+    },
+
+    //private method partion method to find out the index of the pivot
+    _partition: function(li,ls) {
+
+                var p = this.vec[ls], 
+                    s = li - 1;
+
+                    for(var i=li;i<=ls;i++) {
+
+                        if(this.vec[i]<=p) 
+
+                           this._swap(++s,i) 
+                    }  
+
+            return s
+    },
+
+    //private method sorting quicksort to sort the array with complexity n log 2 n
+    _quicksort: function(li,ls) {
+
+         var p = this._partition(li,ls)
+
+             if(li < p - 1) this._quicksort(li,p-1)
+
+             if(ls > p + 1) this._quicksort(p+1,ls)
+            
+    },
+
+    //public method sort
+    set: function( arr ) {
+
+          this.vec = arr
+ 
+          len = arr.length
+           
+    },
+
+    get: function() {
+
+         return this.vec
+    },
+
+    sort: function() {
+
+          this._quicksort(0,len-1)
+    } 
+}
+
+Gogol.set([9,8,7,6,5,4,3,2,1,12,33,1221,-2,-333])
+
+Gogol.sort()
+
+console.log(Gogol.get())
+
+var Socrate = function() {
+
+  var vec = [], len = -1
+
+  function init(arr) {
+
+      vec = arr
+ 
+      len = arr.length 
+  }
+
+  function get() {
+
+      return vec
+  }
+
+  function sort() {
+
+        _quicksort(0,len-1)
+  } 
+
+  function _quicksort(li,ls) {
+
+           var p;
+
+           p = _partition(li,ls)
+
+           if((p-1) > li) _quicksort(li,p-1)
+
+           if(p < ls) _quicksort(p,ls) 
+  }
+
+  function _partition(li,ls) {
+
+           var pivot = vec[ Math.floor((li+ls)/2) ],
+
+               i = li,
+
+               j = ls;
+
+           while(i<=j) {
+
+                 while(vec[i]<pivot) {
+
+                       i++ 
+                 }  
+
+                 while(vec[j]>pivot) {
+
+                       j--
+                 }  
+
+                 if(i<=j) {
+
+                        _swap(i,j)
+                        i++
+                        j--  
+                 }
+           }
+
+        return i  
+  }
+
+  function _swap(i,j) {
+
+        var temp;
+
+            temp = vec[i]
+            vec[i] = vec[j]
+            vec[j] = temp     
+  }
+
+  return {init: init, get: get, sort: sort}
+}()
+
+Socrate.init([9,8,7,6,5,3,2,1203,1,-1,-12,9.3,33.11])
+Socrate.sort()
+console.log(Socrate.get())
+
+</script>
+</head>
+<body>
+</body>
+</html>
+

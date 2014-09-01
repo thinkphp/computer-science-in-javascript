@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title>
+</title>
+<style type="text/css">
+</style>
+<script type="text/javascript" src="stack.js"></script>
+<script type="text/javascript">
+
+var stack = new Stack();
+
+    stack.push(1);
+    stack.push(2);
+    stack.push(3);
+    stack.push(4);
+    stack.push(5);
+
+    console.log(stack.all());  
+
+    console.log( stack.pop() );
+
+    console.log(stack.all());  
+
+    console.log( stack.pop() );
+    console.log( stack.pop() );
+    console.log( stack.pop() );
+    console.log( stack.pop() );
+
+    console.log( stack.pop() );
+    console.log( stack.pop() );
+
+    
+    console.log( stack.getTop() );
+</script>
+</head>
+<body>
+</body>
+</html>
+

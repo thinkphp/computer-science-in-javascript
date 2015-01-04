@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>MergeSort Interface</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <style>
+  body{font-family: arial,verdana,sans-serif;font-size: 30px}
+  input{border: 1px solid #ccc;font-size: 40px;text-align: center;padding: 4px;margin: 5px}
+  input:focus{background: #E0FFB0;text-align:center}
+  </style>
+
+  <script type="text/javascript">
+
+ var MergeSort = function() {
+
+     var arr = [], 
+         N; 
+
+     function get() {
+
+          return arr; 
+     };
+
+     function sort() {
+
+               N = arr.length;
+
+              _mergesort(0, N - 1); 
+
+     };
+
+     function _merge(lo, m, hi) {
+
+              var temp = [],
+
+                  i,
+
+                  j,
+
+                  k;
+
+              for(i = lo; i <= hi; i++) temp[ i - lo ] = arr[ i ];
+
+              for(i = k = lo, j = m + 1;i <= m && j <= hi; ) {
+
+                  if(temp[ i - lo ] < temp[ j - lo]) {
+
+                     arr[ k++ ] = temp[i++ - lo];
+
+                  } else {
+
+                     arr[ k++ ] = temp[j++ - lo];
+                  }  
+              }
+
+              while(i <= m) { 
+
+                 arr[ k++ ] = temp[i++ - lo];
+              }
+
+              while(j <= hi) { 
+
+                 arr[ k++ ] = temp[j++ - lo];
+              }
+     };
+
+     function _mergesort(lo, hi) {
+
+
+             if(lo < hi) {
+
+                    var middle = (lo + hi) >> 1;  
+                  
+                   _mergesort(lo, middle); 
+
+                   _mergesort(middle + 1, hi);
+
+                   _merge(lo, middle, hi); 
+              }  
+     }
+
+     function init( vec ) {
+
+          arr = vec;
+     };
+
+     return {init: init, get: get, sort: sort} 
+ }();
+ 
+  var Dom = {
+
+      addEvent: function(elem, evType, handler, useCapture) {
+
+                if( elem.addEventListener ) {
+
+                   elem.addEventListener(evType, handler, useCapture);
+
+                } else if ( elem.attachEvent ) {
+
+                   elem.attachEvent('on'+evType, handler)
+
+                } else {
+
+                   elem['on'+evType] = handler
+                }
+      }
+  };
+
+  var $ = function( id ){return document.getElementById( id )}
+
+  function solve( input ) {
+
+           var buckets = []
+
+           for(var i = 0; i < input.length; i++) {
+
+                    buckets[ i ] = parseInt( input[ i ] )
+           }
+
+           MergeSort.init( buckets )
+
+           MergeSort.sort()
+         
+           $('output').innerHTML = MergeSort.get()
+  }
+
+
+  function init() {
+
+      Dom.addEvent($('solve'),'click', function(){
+ 
+          var input = $('input').value
+ 
+              input = input.split(",")
+
+              solve( input )
+ 
+      }, false)          
+  }
+
+  Dom.addEvent(window,'load',init, false)
+
+  </script>
+</head>
+<body>
+<center>
+<h1>MergeSort in JavaScript</h1>
+<input type="text" name="input" id="input" /><input type="button" name="solve" id="solve" value="Sort" />
+<p id="output"></p>
+</center>
+<pre>
+<code>
+             if(lo < hi) {
+
+                    var middle = (lo + hi) >> 1;  
+                  
+                   _mergesort(lo, middle); 
+
+                   _mergesort(middle + 1, hi);
+
+                   _merge(lo, middle, hi); 
+              }  
+
+</code>
+</pre>
+</body>
+</html>

@@ -1,4 +1,4 @@
-# QuickSort C/C++
+# QuickSort Algorithm in JavaScript
 
 Charles Antony Richard Hoare, commonly known as Tony Hoare, He Developed the Sorting Algorithm QuickSort.
 

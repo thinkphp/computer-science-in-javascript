@@ -7,6 +7,7 @@
   body{font-family: arial,verdana,sans-serif;font-size: 30px}
   input{border: 1px solid #ccc;font-size: 40px;text-align: center;padding: 4px;margin: 5px}
   input:focus{background: #E0FFB0;text-align:center}
+  #output{background: #CCC;text-align: center;font-size: 50px}
   </style>
 
   <script type="text/javascript">
@@ -23,7 +24,7 @@
            this.vec.push( elem );
   }; 
 
-  Container.prototype.sort = function(  ) {
+  Container.prototype.sorted = function(  ) {
 
             this._mergesort(0, this.size - 1); 
   };
@@ -116,9 +117,9 @@
                     obj.add_to_container( parseInt( input[ i ] ) );
            }
 
-           obj.sort();
+           obj.sorted();
          
-           $('output').innerHTML = obj.get()
+           $('output').innerHTML = "<label for=\"output\">Output: " + obj.get() + "</label>";
 
   };
 
@@ -143,27 +144,26 @@
 <body>
 <center>
 <h1>MergeSort in JavaScript</h1>
-<input type="text" name="input" id="input" /><input type="button" name="solve" id="solve" value="Sort" />
+<label for="input">Input</label><input type="text" name="input" id="input" /><input type="button" name="solve" id="solve" value="Sort" />
 <p id="output"></p>
 </center>
 <pre>
 <code>
 
-  Container.prototype._mergesort = function(lo, hi) {
+ function solve( input ) {
 
-            if(lo == hi) return;
+           var obj = new Container( input.length );
 
-            else {
+           for(var i = 0; i < input.length; i++) {
 
-                 var m = (lo + hi) >> 1; 
+                    obj.add_to_container( parseInt( input[ i ] ) );
+           }
 
-                     this._mergesort(lo, m);  
+           obj.sorted();
+         
+           $('output').innerHTML = obj.get()
 
-                     this._mergesort(m + 1, hi);  
-
-                     this._merge(lo, m, hi);  
-            }
-  }; 
+  };
 
 </code>
 </pre>

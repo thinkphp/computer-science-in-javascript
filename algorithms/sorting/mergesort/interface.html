@@ -35,7 +35,7 @@
 
   Container.prototype._merge = function(lo, m, hi) {
 
-            var temp = new Array(hi - lo + 1),
+            var temp = new Array( hi - lo + 1 ),
      
                 i,
 
@@ -49,9 +49,9 @@
 
            j = m + 1; 
 
-           while(i <= lo && j <= hi) {
+           while(i <= m && j <= hi) {
 
-                 if(temp[i - lo] < temp[j - lo]) {
+                 if(temp[i - lo ] < temp[ j - lo ]) {
       
                     this.vec[ k++ ] = temp[i++ - lo];
   
@@ -74,17 +74,15 @@
 
   Container.prototype._mergesort = function(lo, hi) {
 
-            if(lo == hi) return;
+            if( lo < hi ) {
 
-            else {
+                 var mi = (lo + hi) >> 1; 
 
-                 var m = (lo + hi) >> 1; 
+                     this._mergesort(lo, mi);  
 
-                     this._mergesort(lo, m);  
+                     this._mergesort(mi + 1, hi);  
 
-                     this._mergesort(m + 1, hi);  
-
-                     this._merge(lo, m, hi);  
+                     this._merge(lo, mi, hi);  
             }
   }; 
  

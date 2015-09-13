@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>HeapSort Interface</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <style>
+  body{font-family: arial,verdana,sans-serif;font-size: 30px}
+  input{border: 1px solid #ccc;font-size: 40px;text-align: center;padding: 4px;margin: 5px}
+  input:focus{background: #E0FFB0;text-align:center}
+  </style>
+
+  <script type="text/javascript">
+
+  var HeapSort = (function() {
+
+      var Heap = [], 
+          sizeHeap = 0, 
+          out = [], 
+          _len;
+
+           
+      function init( arr ) {
+
+          var n = arr.length; 
+
+          _len = n;
+
+          for(i = 0; i < n; i++) insertHeap( arr[ i ] )
+      }
+
+      function insertHeap( val ) {
+
+               Heap[ ++sizeHeap ] = val
+               
+               up( sizeHeap );
+      }
+
+      function _swap(a, b) {
+
+              var x;
+
+              x = Heap[ a ] ^ Heap[ b ]
+
+                  Heap[ a ] = x ^ Heap[ a ]
+
+                  Heap[ b ] = x ^ Heap[ b ]
+      }
+
+      function up( child ) {
+
+               var parrent = parseInt( child / 2 )
+
+               while( parrent ) {
+
+                      if(Heap[ parrent ] > Heap[ child ]) {
+
+                         _swap( parrent, child )
+
+                         child = parrent
+
+                         parrent = parseInt( child / 2 )
+
+                      } else break
+               }
+      }     
+
+      function down( parrent ) {
+
+               while( 2 * parrent <= sizeHeap ) {
+
+                      var child = 2 * parrent
+
+                      if(2 * parrent + 1 <= sizeHeap && Heap[ 2 * parrent + 1 ] < Heap[ 2 * parrent ]) child++
+
+                      if(Heap[ parrent ] <= Heap[ child ]) break;
+
+                      _swap( parrent, child );
+
+                       parrent = child                        
+               }
+      } 
+ 
+      function removeHeap() {
+
+           var val = Heap[ 1 ]
+
+               Heap[ 1 ] = Heap[ sizeHeap-- ]
+
+               down( 1 )
+
+               out.push( val )
+      }
+
+      function get() {
+
+           return out;
+      }
+
+      function sort() {
+          
+           for(i = 1; i <= _len; ++i) removeHeap();
+      }
+
+      return {init: init, get: get, sort: sort} 
+
+  })();
+  </script>
+  <script type="text/javascript">
+
+  var Dom = {
+
+      addEvent: function(elem, evType, handler, useCapture) {
+
+                if( elem.addEventListener ) {
+
+                   elem.addEventListener(evType, handler, useCapture);
+
+                } else if ( elem.attachEvent ) {
+
+                   elem.attachEvent('on'+evType, handler)
+
+                } else {
+
+                   elem['on'+evType] = handler
+                }
+      }
+  };
+
+  var $ = function( id ){return document.getElementById( id )}
+
+  function solve( input ) {
+
+           var buckets = []
+
+           for(var i = 0; i < input.length; i++) {
+
+               buckets[ i ] = parseInt( input[ i ] )
+           }
+
+           HeapSort.init( buckets )
+
+           HeapSort.sort()
+         
+           $('output').innerHTML = HeapSort.get()
+  }
+
+
+  function init() {
+
+      Dom.addEvent($('solve'),'click', function(){
+ 
+          var input = $('input').value
+ 
+              input = input.split(",")
+
+              solve( input )
+ 
+      }, false)          
+  }
+
+  Dom.addEvent(window,'load',init, false)
+
+  </script>
+</head>
+<body>
+<center>
+<h1>HeapSort in JS O(n log n)</h1>
+<input type="text" name="input" id="input" /><input type="button" name="solve" id="solve" value="Sort" />
+<p id="output"></p>
+</center>
+<pre>
+<code>
+</code>
+</pre>
+</body>
+</html>

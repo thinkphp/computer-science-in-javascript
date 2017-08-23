@@ -1,0 +1,175 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Sorting Methods: bubble sort, select by min,shell sort, quick sort, merge sort</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <style>
+  html,body {background: #333;color: #ccc}
+  h1 {
+     background: #393;
+     font-family: helvetica,arial,verdana,sans-serif;
+     font-size: 350%;
+     padding: 5px;
+     margin: 20px;
+     border: 1px solid #393;
+     -moz-border-radius: 10px;
+     -webkit-border-radius: 10px;
+     border-radius: 40px;
+     color: #FDFFD7;
+  }
+
+  button,input{border: 1px solid #ccc;font-size: 40px;padding: 5px;margin: 5px;text-align: center}
+
+  input:focus{background: #FDFFD7}
+
+  div#output{
+
+     background: #28;
+     font-family: helvetica,arial,verdana,sans-serif;
+     font-size: 340%;
+     padding: 5px;
+     margin: 20px;
+     border: 1px solid #393;
+     -moz-border-radius: 10px;
+     -webkit-border-radius: 10px;
+     border-radius: 40px;
+     color: #FDFFD7;
+  }
+  </style>
+  <script type="text/javascript">
+   var $ = function(id){return document.getElementById(id)};
+
+   var ascending_order = function(a, b) { return a > b }
+   var descending_order = function(a, b) { return a < b }
+    
+   Dom = {
+         addEvent: function(elem, evType, fn, useCapture) {
+
+                   if(elem.addEventListener) {
+
+                     elem.addEventListener(evType, fn, useCapture); 
+
+                   } else if(elem.attachEvent) {
+
+                     elem.attachEvent('on'+evType, fn);  
+
+                   } else {
+
+                     elem['on'+evType] = fn;
+                   }
+         }
+   }; 	
+
+   var sorting = {
+
+       vec: [], //the array to sort. initialy unsorted
+
+       n: 0, //number of the items
+
+       init: function(input) {
+
+             sorting.vec = input;
+       },
+
+       get: function() {
+
+            return sorting.vec;
+       },
+
+       pancake: function(comp) {
+
+                sorting.n = sorting.vec.length;
+
+                var curr_size;
+
+                for(curr_size = sorting.n; curr_size > 1; curr_size--) {
+
+                    var iMax = sorting.find(curr_size, comp);
+
+                    if(iMax != (curr_size - 1)) {
+
+                        sorting.flip(iMax)
+
+                        sorting.flip(curr_size-1)
+                    }
+                }      
+
+
+       },
+ 
+       find: function(index, comp) {
+
+             var iMax = 0;
+
+             for(var i = 1; i < index; ++i) 
+
+                 if(comp(parseInt(sorting.vec[i]) , parseInt(sorting.vec[iMax]) ) ) iMax = i;
+
+             return iMax    
+       },
+
+       flip: function(index) {
+
+             var start = 0;
+
+             while(start < index) {
+
+                   var tmp = sorting.vec[start];
+
+                       sorting.vec[start++] = sorting.vec[index];
+
+                       sorting.vec[index--] = tmp; 
+             }  
+       }
+   }; 
+
+   function sort_asc() {
+
+           var input = document.getElementById('input').value;
+
+           input = input.split(",");
+
+           sorting.init(input);
+
+           sorting.pancake(ascending_order);
+
+           var output = sorting.get();
+
+           $('output').innerHTML = 'Output: ' + output;
+   };
+
+   function sort_desc() {
+
+           var input = document.getElementById('input').value;
+
+           input = input.split(",");
+
+           sorting.init(input);
+
+           sorting.pancake(descending_order);
+
+           var output = sorting.get();
+
+           $('output').innerHTML = 'Output: ' + output;
+
+   };
+
+   function init() {
+
+            Dom.addEvent($('solve'), 'click', sort_asc, false); 
+
+            Dom.addEvent($('solve2'), 'click', sort_desc, false);
+   };
+
+   Dom.addEvent(window, 'load', init, false);
+  </script>
+</head>
+<body>
+<center>
+<h1>Pancake Sorting</h1>
+<input type="text" name="input" id="input" style="width: 800px"/>
+<button id="solve">Sort Asc Order</button>
+<button id="solve2">Sort Desc Order</button>
+<div id="output">Output: </div>
+</center>
+</body>
+</html>

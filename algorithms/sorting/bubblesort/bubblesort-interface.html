@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Gnome Sorting Interface</title>
+  <title>Bubblesort Interface</title>
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
   <style>
   body{font-family: arial,verdana,sans-serif;font-size: 30px}
@@ -16,7 +16,7 @@ var asc_order = function(a, b) {return a > b},
 
     desc_order = function(a, b) {return a < b};
 
- var Gnome = function() {
+ var Bubblesort = function() {
 
      var vec = [], 
 
@@ -31,7 +31,7 @@ var asc_order = function(a, b) {return a > b},
 
               n = vec.length;
  
-              _gnome(asc_order); 
+              _bubblesort(asc_order); 
 
      };
 
@@ -39,23 +39,38 @@ var asc_order = function(a, b) {return a > b},
 
               n = vec.length;
  
-              _gnome(desc_order); 
+              _bubblesort(desc_order); 
 
      };
-     function _gnome(comp) {
 
-             var pos = 0;
+     function _bubblesort( comp ) {
 
-             while(pos < n) {
+              var finished = 0, 
 
-                   if(pos == 0 || comp(vec[pos-1], vec[pos]) ) pos++;
+                  swapped, 
 
-                               else {
-                                    _s(pos-1, pos); 
-                                    pos--;
-                               }
-             }
-     }      
+                  last = n
+
+              while( !finished ) {
+
+                      swapped = 0
+ 
+                      for(var i = 0; i < last - 1; ++i) {
+
+                              if(comp( vec[ i ] , vec[ i + 1 ]) ) {
+
+                                 _s(i, i + 1)
+
+                                 swapped = 1
+                              }
+                      }
+
+                      if( swapped ) last--
+
+                          else 
+                                    finished = 1
+              }
+     };
 
      function _s(a, b) {
 
@@ -104,11 +119,11 @@ var asc_order = function(a, b) {return a > b},
                     buckets[ i ] = parseInt( input[ i ] )
            }
 
-           Gnome.init( buckets )
+           Bubblesort.init( buckets )
 
-           Gnome.sort1()
+           Bubblesort.sort1()
          
-           $('output').innerHTML = Gnome.get()
+           $('output').innerHTML = Bubblesort.get()
   }
 
   function solve2( input ) {
@@ -120,11 +135,11 @@ var asc_order = function(a, b) {return a > b},
                     buckets[ i ] = parseInt( input[ i ] )
            }
 
-           Gnome.init( buckets )
+           Bubblesort.init( buckets )
 
-           Gnome.sort2()
+           Bubblesort.sort2()
          
-           $('output').innerHTML = Gnome.get()
+           $('output').innerHTML = Bubblesort.get()
   }
 
 
@@ -158,7 +173,7 @@ var asc_order = function(a, b) {return a > b},
 </head>
 <body>
 <center>
-<h1>Gnome in JavaScript</h1>
+<h1>Bubblesort in Action</h1>
 <input type="text" name="input" id="input" />
 <input type="button" name="solve" id="solve" value="Sort ASC" />
 <input type="button" name="solve2" id="solve2" value="Sort DESC" />
@@ -166,11 +181,11 @@ var asc_order = function(a, b) {return a > b},
 </center>
 <pre>
 <code>
-           Gnome.init( arr )
+           Bubblesort.init( arr )
 
-           Gnome.sort()
+           Bubblesort.sort( asc_order );
          
-           $('output').innerHTML = Gnome.get()
+           $('output').innerHTML = Bubblesort.get()
 </code>
 </pre>
 </body>

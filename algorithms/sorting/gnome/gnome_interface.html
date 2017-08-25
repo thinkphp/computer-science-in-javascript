@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Gnome Sorting Interface</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <style>
+  body{font-family: arial,verdana,sans-serif;font-size: 30px}
+  input{border: 1px solid #ccc;font-size: 40px;text-align: center;padding: 4px;margin: 5px}
+  input:focus{background: #E0FFB0;text-align:center}
+  #output{background: #E0FFB0;text-align:center; font-size: 70px} 
+  </style>
+
+  <script type="text/javascript">
+
+var asc_order = function(a, b) {return a < b},
+
+    desc_order = function(a, b) {return a > b};
+
+ var Gnome = function() {
+
+     var vec = [], 
+
+         n; 
+
+     function get() {
+
+          return vec; 
+     };
+
+     function sort_asc() {
+
+              n = vec.length;
+ 
+              _gnome(asc_order); 
+
+     };
+
+     function sort_desc() {
+
+              n = vec.length;
+ 
+              _gnome(desc_order); 
+
+     };
+     function _gnome(comp) {
+
+             var pos = 0;
+
+             while(pos < n) {
+
+                   if(pos == 0 || comp(vec[pos-1], vec[pos]) ) pos++;
+
+                               else {
+                                    _s(pos-1, pos); 
+                                    pos--;
+                               }
+             }
+     }      
+
+     function _s(a, b) {
+
+         var tmp = vec[ a ]^vec[ b ];
+
+             vec[ a ] = tmp^vec[ a ];
+
+             vec[ b ] = tmp^vec[ b ];
+     }; 
+
+     function init( arr ) {
+
+          vec = arr;
+     };
+
+     return {init: init, get: get, sort1: sort_asc, sort2: sort_desc} 
+ }();
+ 
+  var Dom = {
+
+      addEvent: function(elem, evType, handler, useCapture) {
+
+                if( elem.addEventListener ) {
+
+                   elem.addEventListener(evType, handler, useCapture);
+
+                } else if ( elem.attachEvent ) {
+
+                   elem.attachEvent('on'+evType, handler)
+
+                } else {
+
+                   elem['on'+evType] = handler
+                }
+      }
+  };
+
+  var $ = function( id ){return document.getElementById( id )}
+
+  function solve1( input ) {
+
+           var buckets = []
+
+           for(var i = 0; i < input.length; i++) {
+
+                    buckets[ i ] = parseInt( input[ i ] )
+           }
+
+           Gnome.init( buckets )
+
+           Gnome.sort1()
+         
+           $('output').innerHTML = Gnome.get()
+  }
+
+  function solve2( input ) {
+
+           var buckets = []
+
+           for(var i = 0; i < input.length; i++) {
+
+                    buckets[ i ] = parseInt( input[ i ] )
+           }
+
+           Gnome.init( buckets )
+
+           Gnome.sort2()
+         
+           $('output').innerHTML = Gnome.get()
+  }
+
+
+  function init() {
+
+      Dom.addEvent($('solve'),'click', function(){
+ 
+          var input = $('input').value
+ 
+              input = input.split(",")
+
+              solve1( input )
+ 
+      }, false)          
+
+     Dom.addEvent($('solve2'),'click', function(){
+ 
+          var input = $('input').value
+ 
+              input = input.split(",")
+
+              solve2( input )
+ 
+      }, false)          
+
+  }
+
+  Dom.addEvent(window,'load',init, false)
+
+  </script>
+</head>
+<body>
+<center>
+<h1>Gnome in JavaScript</h1>
+<input type="text" name="input" id="input" />
+<input type="button" name="solve" id="solve" value="Sort ASC" />
+<input type="button" name="solve2" id="solve2" value="Sort DESC" />
+<p id="output"></p>
+</center>
+<pre>
+<code>
+           Gnome.init( arr )
+
+           Gnome.sort()
+         
+           $('output').innerHTML = Gnome.get()
+</code>
+</pre>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Binary Search Algorithm</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <style>
+  body{font-family: arial,verdana,sans-serif;font-size: 40px;}
+  input{border: 1px solid #ccc;font-size: 40px;padding: 4px;margin: 4px;text-align: center}
+  input:focus{background: #E5FFBC;text-align: center;}
+  .first{color: #c00;}
+  </style>
+  <script src="bsearch.js"></script> 
+  <script type="text/javascript">
+
+   DOMhelp = {
+ 
+             addEvent: function(elem,evType,fn,useCapture) {
+
+                       if(elem.addEventListener) {
+
+                               elem.addEventListener(evType,fn,useCapture); 
+
+                       } else if(elem.attachEvent) {
+
+                               var r = elem.attachEvent('on'+evType,fn);
+
+                               return r;
+
+                       } else {
+
+                              elem['on'+evType] = fn; 
+                       }                
+             },
+
+             trim: function(s) {
+
+                       return s.replace(/^\s+/,'').replace(/\s+$/,'');
+             } 
+   };
+
+
+ 
+    function solve() {
+
+        var arr = document.getElementById('input').value;
+
+            arr = DOMhelp.trim(arr);
+
+            if(arr == "") {document.getElementById('output').innerHTML = "Error!The input is not valid!";return;}
+
+            arr = arr.split(",");
+
+        var search = document.getElementById('search').value; 
+
+            search = DOMhelp.trim(search);
+
+            if(search == "") {document.getElementById('output').innerHTML = "Error!The field 'search value' is empty!";return;}
+
+        //var out = bsearch(arr,0,arr.length-1,search);
+        var out = bsearch2(arr, search);
+
+            if(typeof out != 'undefined' && out != -1) {
+
+            document.getElementById('output').innerHTML = "The element '" + search +"' <span class='first'>IS FOUND</span> on position: " + (out+1); 
+ 
+            } else {
+
+            document.getElementById('output').innerHTML = "The element: '" + search +"' <span class='first'>NOT FOUND</span> in vector!"; 
+
+            }
+
+   }
+
+   function init() {
+
+    DOMhelp.addEvent(document.getElementById("solve"),'click',solve,false);
+
+   }
+
+   DOMhelp.addEvent(window,'load',init,false);
+  </script>
+</head>
+<body>
+<center>
+<h1><span class="first">Binary search</span> algorithm</h1>
+<label for="input">Enter an ordered vector(ex: 11,22,33,44,55,88,99) </label><input type="text" name="input" id="input" size="49"/><br/>
+<label for="input">Search value: </label><input type="text" size="5" name="search" id="search" /><input type="button" id="solve" name="solve" value="solve">
+<p id="output"></p>
+</center>
+</body>
+</html>

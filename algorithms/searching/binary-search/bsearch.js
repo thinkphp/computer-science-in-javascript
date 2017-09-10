@@ -2,15 +2,15 @@
 
          var m; 
 
-             if(li>ls) {return;}
+             if( li > ls ) { return; }
             
-             m = parseInt((li+ls)/2);             
+             m = parseInt(( li + ls) / 2 );             
 
-             if(Number(arr[m]) < searchValue) {return bsearch(arr,m+1,ls,searchValue);}   
+             if(Number(arr[m]) < searchValue) { return bsearch(arr,m+1,ls,searchValue); }   
 
-                                else if(arr[m] > searchValue) {return bsearch(arr,li,m-1,searchValue);}   
+                                else if(arr[m] > searchValue) { return bsearch(arr,li,m-1,searchValue); }   
 
-                                       else {return m+1;} 
+                                       else { return m + 1; } 
     }
 
 

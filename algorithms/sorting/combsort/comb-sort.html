@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Comb Sort Interface</title>
+<style>
+  body{font-family: arial,verdana,sans-serif;font-size: 30px}
+  input{border: 1px solid #ccc;font-size: 40px;text-align: center;padding: 4px;margin: 5px}
+  input:focus{background: #E0FFB0;text-align:center}
+  #output{background: #E0FFB0;text-align:center; font-size: 70px} 
+</style>
+<script>
+
+var asc_order = function(a, b) {
+    if(a > b) return 1;
+        else  return -1;  
+}
+
+var desc_order = function(a, b) {
+
+    if(a < b) return 1;
+
+        else  return -1;  
+}
+
+var Algorithms = (function() {
+ 
+    var arr = [], //input array
+
+        size = 0;//the length of the array
+
+    function init( array ) {
+     
+        arr = array
+
+        size = array.length
+    };
+
+    function get() {
+
+        return arr  
+    };
+
+    function sort_asc() {
+ 
+        _combsort(asc_order); 
+    };
+
+    function sort_desc() {
+ 
+        _combsort( desc_order ); 
+    };
+
+    function _combsort( comparer ) {
+
+            var shrinkFactor = 1.3, 
+
+                gap = size,
+
+                swapped;
+
+            while( gap > 1 || swapped == true) {
+
+                   if(gap > 1) gap = Math.floor( gap / shrinkFactor )
+
+                   swapped = false
+
+                   for(var i = 0; i + gap < size; ++i) 
+
+                   if( comparer(arr[ i ], arr[ i + gap ] ) > 0) { 
+
+                      _swap(i, i+gap)
+
+                      swapped = true
+                   }
+            }               
+
+
+    }
+
+    function _swap(a, b) {
+
+             var r = arr[a]^arr[b]
+                 arr[a] = r^arr[a]     
+                 arr[b] = r^arr[b]              
+    }  
+
+    return{init: init, get: get, sort: sort_asc, sort2: sort_desc} 
+}());
+
+var DOM = {
+
+    addEvent: function(elem, evType, handleFn, useCapture) {
+
+              if( elem.addEventListener ) elem.addEventListener(evType, handleFn, useCapture)
+
+              else if( elem.attachEvent ) {
+
+                   elem.attachEvent('on' + evType, handleFn );
+
+              } else {
+
+                   elem['on'+evType] = handleFn; 
+              }
+    },
+
+    $: function( id ) {
+
+       return document.getElementById( id )
+    } 
+}
+
+function handleButton1() {
+
+              var input = DOM.$('arr').value
+ 
+                  input = input.split(",")
+
+              var buckets = []
+
+                  for(var i = 0; i < input.length; i++) buckets[ i ] = parseInt( input[ i ] )
+       
+                  Algorithms.init( buckets )
+
+                  Algorithms.sort()
+
+                  DOM.$('output').innerHTML = Algorithms.get();
+}
+
+function handleButton2() {
+
+              var input = DOM.$('arr').value
+ 
+                  input = input.split(",")
+
+              var buckets = []
+
+                  for(var i = 0; i < input.length; i++) buckets[ i ] = parseInt( input[ i ] )
+       
+                  Algorithms.init( buckets )
+
+                  Algorithms.sort2()
+
+                  DOM.$('output').innerHTML = Algorithms.get();
+}
+
+function init() {
+
+         DOM.addEvent( DOM.$('buttonASC'), 'click', handleButton1, false )
+         DOM.addEvent( DOM.$('buttonDESC'), 'click', handleButton2, false )
+};
+
+DOM.addEvent(window, 'load', init, false)
+
+</script>
+</head>
+<body>
+<h1>Comb Sort Interface</h1>
+<input type="text" id="arr" name="arr"/>
+<button id="buttonASC">SortASC</button>
+<button id="buttonDESC">SortDSC</button>
+<div id="output">1,2,3,4,5,6,7,8,9</div>
+</body>
+</html>

@@ -7,4 +7,4 @@ outside the input array at any time.
 
 ## Demos
 
-   http://thinkphp.ro/apps/js-hacks/computer-science-in-javascript/algorithms/sorting/heapsort/Heap_Sort_Interface.html  
+  

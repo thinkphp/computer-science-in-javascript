@@ -1,1 +1,1 @@
-# Binary Searc68
+# Search Algorithms

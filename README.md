@@ -3,6 +3,8 @@
 
 #### References
 
+https://simplesnippets.tech/what-is-document-object-modeldom-how-js-interacts-with-dom/
+
 https://www.w3schools.com/js/default.asp
 
 https://andersonguelphjs.github.io/OReilly_JavaScript_The_Good_Parts_May_2008.pdf

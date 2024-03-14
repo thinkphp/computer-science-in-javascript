@@ -15,6 +15,6 @@ https://domscripting.com/book/
 
 https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics
 
-https://learnxinyminutes.com/docs/javascript/
+ Learn X in Y minutes https://learnxinyminutes.com/docs/javascript/
 
 Programming Language Explorations https://rtoal.github.io/ple/

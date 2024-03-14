@@ -17,4 +17,4 @@ https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/Java
 
 https://learnxinyminutes.com/docs/javascript/
 
-Programming language Explorer https://rtoal.github.io/ple/
+Programming Language Explorations https://rtoal.github.io/ple/

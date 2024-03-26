@@ -10,3 +10,5 @@ Gems:
 https://www.w3schools.com/js/tryit.asp?filename=tryjs_typeof_all
 
 Functions:
+
+https://www.w3schools.com/js/js_function_definition.asp

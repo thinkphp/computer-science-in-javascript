@@ -7,9 +7,10 @@ Gems:
 * DOM document.getElementById("ID")
 * DOM document.getElementByClassName("class")
 
-Hoisted Declarations:
+The typeof Operator https://www.w3schools.com/js/tryit.asp?filename=tryjs_typeof_all
 
-https://www.w3schools.com/js/js_hoisting.asp
+
+Hoisted Declarations: https://www.w3schools.com/js/js_hoisting.asp
 
 https://www.w3schools.com/js/tryit.asp?filename=tryjs_typeof_all
 

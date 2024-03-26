@@ -7,4 +7,6 @@ Gems:
 * DOM document.getElementById("ID")
 * DOM document.getElementByClassName("class")
 
+https://www.w3schools.com/js/tryit.asp?filename=tryjs_typeof_all
+
 Functions:

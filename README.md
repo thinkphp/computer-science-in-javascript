@@ -11,11 +11,16 @@ Programming Language Explorations
 
 * https://rtoal.github.io/ple/
 
-JavaScript: The Good Parts https://andersonguelphjs.github.io/OReilly_JavaScript_The_Good_Parts_May_2008.pdf
+JavaScript: The Good Parts 
 
-https://www.w3schools.com/js/default.asp
+* https://andersonguelphjs.github.io/OReilly_JavaScript_The_Good_Parts_May_2008.pdf
 
-https://simplesnippets.tech/what-is-document-object-modeldom-how-js-interacts-with-dom/
+W3Schools:
+* https://www.w3schools.com/js/default.asp
+
+What is Document Object Model(DOM) 
+
+* https://simplesnippets.tech/what-is-document-object-modeldom-how-js-interacts-with-dom/
 
 https://eloquentjavascript.net/
 

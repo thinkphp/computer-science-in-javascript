@@ -3,9 +3,13 @@
 
 #### References
 
-Learn X in Y minutes https://learnxinyminutes.com/docs/javascript/
+Learn X in Y minutes 
 
-Programming Language Explorations https://rtoal.github.io/ple/
+* https://learnxinyminutes.com/docs/javascript/
+
+Programming Language Explorations 
+
+* https://rtoal.github.io/ple/
 
 JavaScript: The Good Parts https://andersonguelphjs.github.io/OReilly_JavaScript_The_Good_Parts_May_2008.pdf
 

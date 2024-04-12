@@ -17,5 +17,11 @@ https://eloquentjavascript.net/
 
 https://domscripting.com/book/
 
-https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics
+JavaScript basics:
+
+* https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics
+
+Introducing JavaScript objects:
+
+* https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects
 

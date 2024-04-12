@@ -34,3 +34,10 @@ Introducing JavaScript objects:
 
 * https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects
 
+Minimal Projects
+
+* https://learnprogramming.online/
+
+TypeScript - a superset of JS
+* https://www.typescripttutorial.net/
+

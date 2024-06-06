@@ -20,7 +20,7 @@ The differences between call and apply in JavaScript along with illustrative exa
   - call: prefer call when you have a clear set of arguments that you want to pass directly. Its generally more readable for a smaller number of arguments.
   - apply: choose apply when you have an existing array of arguments that you want to use or if you need more dynamic argument handling.
 
-   #### Examples:
+#### Examples:
 
   1. Changing this context:
 

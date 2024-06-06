@@ -33,7 +33,7 @@ The differences between call and apply in JavaScript along with illustrative exa
   greet.call(person, 'Hello') //output: Hello, David!
   ```
 
-2. Borrowing a method:
+  2. Borrowing a method:
 
 ```
     function sum(a, b) {

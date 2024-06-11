@@ -1,5 +1,16 @@
 ```
-<ul id="techList"><li class="item"><h2>Technologies</h2><ul><li>HTML</li><li>CSS</li><li>JavaScript</li><li>React</li><li>Node.js</li></ul></li></ul>
+<ul id="techList">
+    <li class="item">
+        <h2>Technologies</h2>
+        <ul>
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JavaScript</li>
+          <li>React</li>
+          <li>Node.js</li>
+        </ul>
+     </li>
+</ul>
 ```
 
 ```

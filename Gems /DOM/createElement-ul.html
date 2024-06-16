@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic List Creation</title>
+    <style>
+        .list-item {
+            color: blue;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <ul id="myList"></ul>
+
+    <script>
+        // Array
+        var arr = ["asd", "as", "asd"];
+
+        // Get reference to the UL element
+        var ul = document.getElementById("myList");
+
+        // Iterate through the array and create list items
+        arr.forEach(function(item) {
+            // Create list item
+            var li = document.createElement("li");
+
+            // Set text content of list item
+            li.textContent = item;
+
+            // Add class to list item
+            li.classList.add("list-item");
+
+            // Append list item to the UL
+            ul.appendChild(li);
+        });
+
+        // Using querySelector to select the first element with class 'list-item'
+        var firstItem = document.querySelector(".list-item");
+        console.log("First item:", firstItem.textContent); // Outputs: "asd"
+
+        // Using querySelectorAll to select all elements with class 'list-item'
+        var allItems = document.querySelectorAll(".list-item");
+        allItems.forEach(function(item, index) {
+            console.log("Item " + (index + 1) + ": " + item.textContent);
+        });
+    </script>
+</body>
+</html>

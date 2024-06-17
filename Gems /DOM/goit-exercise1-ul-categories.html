@@ -27,6 +27,42 @@
     </ul>
   </li>
 </ul>
+
+<script>
+
+  // Initialize an empty array to store the <li> content
+var listArray = [];
+
+// Select all <li> elements
+var listItems = document.querySelectorAll('li');
+
+// Loop through each <li> element
+for (var i = 0; i < listItems.length; i++) {
+    // Push the content of the <li> into the array
+    listArray.push(listItems[i].textContent.trim());
+}
+
+// Output the array
+console.log(listArray);
+
+</script>  
+
+
+<script>
+
+// Get the element whose textContent contains "\n"
+var element = document.getElementById('exampleElement');
+
+// Replace "\n" with an empty string
+var cleanText = element.textContent.replace(/\n/g, '');
+
+// Update the element's textContent with the cleaned text
+element.textContent = cleanText;
+
+  
+</script>  
+
+
 <script>
   // Select all <li> elements
 var listItems = document.querySelectorAll('li');

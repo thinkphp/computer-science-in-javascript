@@ -37,3 +37,23 @@ var listArray = Array.from(listItems);
 // Output the array
 console.log(listArray);
 </script>
+
+
+<script>
+
+  // Initialize an empty array to store the <li> content
+var listArray = [];
+
+// Select all <li> elements
+var listItems = document.querySelectorAll('li');
+
+// Loop through each <li> element
+listItems.forEach(function(li) {
+    // Push the content of the <li> into the array
+    listArray.push(li.textContent.trim());
+});
+
+// Output the array
+console.log(listArray);
+
+</script>  

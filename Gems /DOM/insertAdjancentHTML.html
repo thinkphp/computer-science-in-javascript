@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>insertAdjacentHTML() Example</title>
+    <style>
+        .container {
+            padding: 20px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="target">
+        Target Element
+    </div>
+
+    <script>
+        const targetElement = document.getElementById('target');
+
+        // Example 1: Insert HTML before the target element
+        targetElement.insertAdjacentHTML('beforebegin', '<div class="container">Before Begin</div>');
+
+        // Example 2: Insert HTML as the first child inside the target element
+        targetElement.insertAdjacentHTML('afterbegin', '<div class="container">After Begin</div>');
+
+        // Example 3: Insert HTML as the last child inside the target element
+        targetElement.insertAdjacentHTML('beforeend', '<div class="container">Before End</div>');
+
+        // Example 4: Insert HTML immediately after the target element
+        targetElement.insertAdjacentHTML('afterend', '<div class="container">After End</div>');
+    </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<ul id="item-list">
+  <li class="item">Item 1</li>
+  <li class="item">Item 2</li>
+  <li class="item">Item 3</li>
+</ul>
+document.getElementById('item-list').addEventListener('click', function(event) {
+  if (event.target && event.target.matches('li.item')) {
+    console.log(`Item clicked: ${event.target.textContent}`);
+  }
+});

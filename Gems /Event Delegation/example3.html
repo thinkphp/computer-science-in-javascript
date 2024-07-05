@@ -13,7 +13,8 @@
   </tr>
 </table>
 <script>
-//Example 3: Handling Button Clicks in a Table  
+// Example 3: Handling Button Clicks in a Table  
+// Imagine you have a table with multiple rows, each containing a button, and you want to handle button clicks within the table.    
 document.getElementById('my-table').addEventListener('click', function(event) {
   if (event.target && event.target.matches('button.action-button')) {
     const row = event.target.closest('tr');

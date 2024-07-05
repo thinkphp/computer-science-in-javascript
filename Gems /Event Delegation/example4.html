@@ -6,34 +6,64 @@ Initially, the cart has some items, but you can dynamically add more using a but
 Here's how event delegation can help:
 */
 
-<script>
-  const cartContainer = document.querySelector('.cart-container');
 
-cartContainer.addEventListener('click', (event) => {
-  if (event.target.classList.contains('remove-item-btn')) {
-    const itemToRemove = event.target.parentElement; // Get the item element
-    // Remove the item from the DOM and update cart data
-  }
-});
+</script>
 
-// Function to add new items with "Remove Item" buttons
-function addNewItem(itemName) {
-  const newItem = document.createElement('div');
-  newItem.classList.add('cart-item');
-  newItem.innerHTML = `
-    <span>${itemName}</span>
-    <button class="remove-item-btn">Remove Item</button>
-  `;
-  cartContainer.appendChild(newItem);
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart</title>
+  <style>
+    .cart-container {
+      border: 1px solid #ddd;
+      padding: 10px;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Shopping Cart</h1>
+  <div class="cart-container" id="cartContainer">
+    </div>
+  <button class="add-item-btn">Add Item</button>
 
-// Add click event listener to the "Add Item" button
-document.querySelector('.add-item-btn').addEventListener('click', () => {
-  const itemName = prompt("Enter item name:");
-  addNewItem(itemName);
-});
+  <script>
+    const cartContainer = document.querySelector('#cartContainer');
 
-</script>  
+    cartContainer.addEventListener('click', (event) => {
+      if (event.target.classList.contains('remove-item-btn')) {
+        const itemToRemove = event.target.parentElement;
+        cartContainer.removeChild(itemToRemove);
+        // Update cart data here (optional)
+      }
+    });
+
+    function addNewItem(itemName) {
+      const newItem = document.createElement('div');
+      newItem.classList.add('cart-item');
+      newItem.innerHTML = `
+        <span>${itemName}</span>
+        <button class="remove-item-btn">Remove Item</button>
+      `;
+      cartContainer.appendChild(newItem);
+    }
+
+    document.querySelector('.add-item-btn').addEventListener('click', () => {
+      const itemName = prompt("Enter item name:");
+      addNewItem(itemName);
+    });
+  </script>
+</body>
+</html>
+  
+</script>
 /*
   In this example, attaching an event listener to the cartContainer instead of each individual button allows you to handle clicks on both existing and 
   newly added "Remove Item" buttons efficiently. When a click occurs, the code checks if the clicked element has the remove-item-btn class. 

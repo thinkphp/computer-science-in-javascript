@@ -3,7 +3,7 @@
   <li class="item">Item 2</li>
   <li class="item">Item 3</li>
 </ul>
-
+<script>
 //Example 1: Handling Click Events on a List of Items
 //Imagine you have a list of items, and you want to handle click events for each item without adding an event listener to every single item.
 document.getElementById('item-list').addEventListener('click', function(event) {
@@ -11,3 +11,4 @@ document.getElementById('item-list').addEventListener('click', function(event) {
     console.log(`Item clicked: ${event.target.textContent}`);
   }
 });
+</script>

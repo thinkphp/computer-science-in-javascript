@@ -33,6 +33,8 @@ Here's how event delegation can help:
   <div class="cart-container" id="cartContainer">
     </div>
   <button class="add-item-btn">Add Item</button>
+</body>
+</html>
 
   <script>
     const cartContainer = document.querySelector('#cartContainer');
@@ -59,11 +61,7 @@ Here's how event delegation can help:
       const itemName = prompt("Enter item name:");
       addNewItem(itemName);
     });
-  </script>
-</body>
-</html>
-  
-</script>
+  </script>  
 /*
   In this example, attaching an event listener to the cartContainer instead of each individual button allows you to handle clicks on both existing and 
   newly added "Remove Item" buttons efficiently. When a click occurs, the code checks if the clicked element has the remove-item-btn class. 

@@ -1,0 +1,40 @@
+/*
+Imagine you have a shopping cart with a "Remove Item" button next to each item. 
+Initially, the cart has some items, but you can dynamically add more using a button. 
+Here's how event delegation can help:
+*/
+
+<script>
+  const cartContainer = document.querySelector('.cart-container');
+
+cartContainer.addEventListener('click', (event) => {
+  if (event.target.classList.contains('remove-item-btn')) {
+    const itemToRemove = event.target.parentElement; // Get the item element
+    // Remove the item from the DOM and update cart data
+  }
+});
+
+// Function to add new items with "Remove Item" buttons
+function addNewItem(itemName) {
+  const newItem = document.createElement('div');
+  newItem.classList.add('cart-item');
+  newItem.innerHTML = `
+    <span>${itemName}</span>
+    <button class="remove-item-btn">Remove Item</button>
+  `;
+  cartContainer.appendChild(newItem);
+}
+
+// Add click event listener to the "Add Item" button
+document.querySelector('.add-item-btn').addEventListener('click', () => {
+  const itemName = prompt("Enter item name:");
+  addNewItem(itemName);
+});
+
+</script>  
+
+/*
+  In this example, attaching an event listener to the cartContainer instead of each individual button allows you to handle clicks on both existing and 
+  newly added "Remove Item" buttons efficiently. When a click occurs, the code checks if the clicked element has the remove-item-btn class. 
+  If so, it removes the corresponding item from the cart.
+*/

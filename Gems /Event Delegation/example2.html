@@ -3,9 +3,12 @@
   <input type="text" class="input-field" />
   <input type="text" class="input-field" />
 </div>
+<script>
 // Handling Input Events on Multiple Inputs
 document.getElementById('input-container').addEventListener('input', function(event) {
   if (event.target && event.target.matches('input.input-field')) {
     console.log(`Input changed: ${event.target.value}`);
   }
 });
+</script>
+  

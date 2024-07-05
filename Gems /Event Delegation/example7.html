@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Dropdown</title>
+  <style>
+    .dropdown {
+      position: relative;
+    }
+    .dropdown-toggle {
+      padding: 10px;
+      cursor: pointer;
+      border: 1px solid #ddd;
+    }
+    .dropdown-options {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #fff;
+      display: none;
+    }
+    .dropdown-options.active {
+      display: block;
+    }
+    .dropdown-options li {
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+    .dropdown-options li:hover {
+      background-color: #f0f0f0;
+    }
+    .dropdown-options li.selected {
+      color: red; /* Example: change color to red when selected */
+    }
+  </style>
+</head>
+<body>
+  <h1>Custom Dropdown</h1>
+  <div class="dropdown">
+    <button class="dropdown-toggle">Select an Option</button>
+    <ul class="dropdown-options">
+      <li>Option 1</li>
+      <li>Option 2</li>
+      <li>Option 3</li>
+    </ul>
+  </div>
+
+  <script>
+    const dropdownContainer = document.querySelector('.dropdown');
+
+    dropdownContainer.addEventListener('click', (event) => {
+      const toggleButton = event.target.closest('.dropdown-toggle');
+      if (toggleButton) {
+        const optionsList = toggleButton.nextElementSibling;
+        optionsList.classList.toggle('active');
+      }
+    });
+
+    // Event delegation for handling li clicks
+    const optionsList = dropdownContainer.querySelector('.dropdown-options');
+    optionsList.addEventListener('click', (event) => {
+      if (event.target.tagName === 'LI') {
+        // Toggle selected class to change color
+        event.target.classList.toggle('selected');
+      }
+    });
+  </script>
+</body>
+</html>
+

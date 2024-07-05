@@ -5,6 +5,7 @@
 </div>
 <script>
 // Handling Input Events on Multiple Inputs
+//Suppose you have multiple input fields, and you want to handle input events for all of them with a single event listener.  
 document.getElementById('input-container').addEventListener('input', function(event) {
   if (event.target && event.target.matches('input.input-field')) {
     console.log(`Input changed: ${event.target.value}`);

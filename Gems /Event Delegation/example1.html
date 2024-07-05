@@ -5,6 +5,7 @@
 </ul>
 
 //Example 1: Handling Click Events on a List of Items
+//Imagine you have a list of items, and you want to handle click events for each item without adding an event listener to every single item.
 document.getElementById('item-list').addEventListener('click', function(event) {
   if (event.target && event.target.matches('li.item')) {
     console.log(`Item clicked: ${event.target.textContent}`);

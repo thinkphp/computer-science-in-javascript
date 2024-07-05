@@ -1,0 +1,49 @@
+//Create an accordion menu where clicking a header toggles the visibility of its content. Here's event delegation in action:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accordion Menu</title>
+  <style>
+    .accordion {
+      border: 1px solid #ddd;
+      margin-bottom: 10px;
+    }
+    .accordion-header {
+      padding: 10px;
+      cursor: pointer;
+      background-color: #eee;
+    }
+    .accordion-content {
+      padding: 10px;
+      display: none;
+    }
+    .accordion-content.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h1>Accordion Menu</h1>
+  <div class="accordion">
+    <div class="accordion-header">Section 1</div>
+    <div class="accordion-content">Content for Section 1</div>
+    <div class="accordion-header">Section 2</div>
+    <div class="accordion-content">Content for Section 2</div>
+  </div>
+
+  <script>
+    const accordion = document.querySelector('.accordion');
+
+    accordion.addEventListener('click', (event) => {
+      const clickedHeader = event.target.closest('.accordion-header');
+      if (clickedHeader) {
+        const content = clickedHeader.nextElementSibling;
+        content.classList.toggle('active');
+      }
+    });
+  </script>
+</body>
+</html>

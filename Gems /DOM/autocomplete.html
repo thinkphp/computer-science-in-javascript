@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <title>Autocomplete Javascript</title>
+     <style>
+      body {
+         font-family: Arial, Helvetica, sans-serif;
+         padding: 20px;
+      }
+      
+     </style>
+</head>
+<body>
+   <h1>Autocomplete JS</h1>
+   <div class="autocomplete">
+        <!-- cuvantul cautare -->
+        <input id="autocomplete-input" type="text" placeholder="Starting Typing...">
+        <!-- sugestiile din DATA -->
+        <div id="suggestions" class="suggestions"></div>
+   </div>
+
+   <script>
+         document.addEventListener('DOMContentLoaded',() => {
+
+                  //obtinem input-ul
+                  const input = document.getElementById("autocomplete-input")
+                  const suggestionsContainer = document.getElementById("suggestions")
+
+                  console.log(input)
+                  console.log(suggestionsContainer)
+
+                  const DATA = [
+                        'Javascript',
+                        'Java',
+                        'Python',
+                        'Python2.7',
+                        'Python3.7',
+                        'Python3.8',
+                        'Angular',
+                        'React',
+                        'ReactJS',
+                        'Vue',
+                        'Django',
+                        'Swift',
+                        'MongoDB',
+                        'PHP',
+                        'Kotlin'
+                  ]
+               //'click','mouseover',
+               //adaugam un handler evenimentului input 
+               input.addEventListener('input', () => {
+                  
+                  const cuvant_cautare = input.value.toLowerCase()
+
+                  suggestionsContainer.innerHTML = ""
+
+                  if( cuvant_cautare ) {
+
+                       const filtrareSugestii = DATA.filter(item => item.toLowerCase().includes(cuvant_cautare))
+
+                       //console.log( filtrareSugestii )
+
+                       //la pasul urmator vom itera prin array-ul de suggestions
+                       //for(let i = 0; i < filtrareSugestii.length; i++)
+                       filtrareSugestii.forEach(item => {
+                                   
+                            const suggestionElement = document.createElement("div")
+                            suggestionElement.classList.add('suggestion')
+                            suggestionElement.textContent = item
+
+                            suggestionElement.addEventListener('click', () => {
+
+                                input.value = item
+                                suggestionsContainer.innerHTML = ""
+                            })
+
+                            suggestionsContainer.appendChild(suggestionElement)
+                       })
+                  }
+
+               })   
+                  
+                  
+         })
+   </script>   
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+      body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+  }
+
+  .container {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+  }
+
+  h1 {
+      margin-bottom: 20px;
+  }
+
+  .input-group {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+  }
+
+  input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 10px;
+  }
+
+  button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+  }
+
+  button:hover {
+      background-color: #0056b3;
+  }
+
+  #task-list {
+      list-style: none;
+      padding: 0;
+  }
+
+  .task {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      transition: background-color 0.3s;
+  }
+
+  .task:hover {
+      background-color: #f9f9f9;
+  }
+
+  .task span {
+      flex: 1;
+      text-align: left;
+  }
+
+  .task input {
+      flex: 1;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      display: none;
+  }
+
+  .task button {
+      margin-left: 10px;
+  }
+
+  .edit {
+      background-color: #ffc107;
+  }
+
+  .edit:hover {
+      background-color: #e0a800;
+  }
+
+  .remove {
+      background-color: #dc3545;
+  }
+
+  .remove:hover {
+      background-color: #c82333;
+  }
+
+    </style>
+</head>
+<body>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>To-Do List</title>
+      <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+      <div class="container">
+          <h1>To-Do List</h1>
+          <div class="input-group">
+              <input type="text" id="new-task" placeholder="Add a new task">
+              <button id="add-task">Add Task</button>
+          </div>
+          <ul id="task-list"></ul>
+      </div>
+      <script src="todo.js"></script>
+  </body>
+  </html>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+    const taskList = document.getElementById('task-list');
+    const newTaskInput = document.getElementById('new-task');
+    const addTaskButton = document.getElementById('add-task');
+
+    // Add task
+    addTaskButton.addEventListener('click', () => {
+        const taskText = newTaskInput.value.trim();
+        if (taskText !== '') {
+            const li = document.createElement('li');
+            li.className = 'task';
+            li.innerHTML = `
+                <span>${taskText}</span>
+                <button class="edit">Edit</button>
+                <button class="remove">Remove</button>
+                <input type="text" class="edit-input">
+            `;
+            taskList.appendChild(li);
+            newTaskInput.value = '';
+        }
+    });
+
+    // Event delegation
+    taskList.addEventListener('click', (event) => {
+        const target = event.target;
+
+        // Remove task
+        if (target.classList.contains('remove')) {
+            const task = target.closest('li');
+            task.remove();
+        }
+
+        // Edit task
+        if (target.classList.contains('edit')) {
+            const task = target.closest('li');
+            const span = task.querySelector('span');
+            const input = task.querySelector('.edit-input');
+            const editButton = task.querySelector('.edit');
+
+            if (input.style.display === 'none' || input.style.display === '') {
+                input.value = span.textContent;
+                span.style.display = 'none';
+                input.style.display = 'inline';
+                input.focus();
+                editButton.textContent = 'Save';
+            } else {
+                span.textContent = input.value;
+                span.style.display = 'inline';
+                input.style.display = 'none';
+                editButton.textContent = 'Edit';
+            }
+        }
+    });
+});
+
+    </script>
+</body>
+</html>

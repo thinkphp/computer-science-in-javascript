@@ -21,3 +21,5 @@ Here's a breakdown of the key aspects:
 ### Practice
 
 To Do List https://00d510a9-f934-43f2-b255-d3e6d525b00c-00-3buprnm7fqvo5.spock.replit.dev/
+
+To Do List with Local Storage https://22e4558f-8877-4a97-9eb8-c9e4dcd1a1eb-00-12x6d5kgubn0a.picard.replit.dev/

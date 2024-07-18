@@ -17,3 +17,7 @@ Here's a breakdown of the key aspects:
 - Cleaner and More Maintainable Code: You have a single point of control for handling events on a group of elements, making the code easier to read and maintain.
 - In essence, event delegation allows you to write cleaner, more efficient, and more scalable event handling code in JavaScript.
 
+
+### Practice
+
+To Do List https://00d510a9-f934-43f2-b255-d3e6d525b00c-00-3buprnm7fqvo5.spock.replit.dev/

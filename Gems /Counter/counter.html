@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter App</title>
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.counter {
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 8px;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.count {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    font-size: 1.5rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 0 5px;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+    </style>
+</head>
+<body>
+    <div class="counter">
+        <h2>Counter App</h2>
+        <div class="count">0</div>
+        <div class="buttons">
+            <button onclick="decrement()">-</button>
+            <button onclick="increment()">+</button>
+        </div>
+    </div>
+
+    <script>
+      // Get the count element
+var countElement = document.querySelector('.count');
+
+// Initial count value
+var count = 0;
+
+// Function to increment the count
+function increment() {
+    count++;
+    countElement.textContent = count;
+}
+
+// Function to decrement the count (with a check to prevent negative values)
+function decrement() {
+    if (count > 0) {
+        count--;
+        countElement.textContent = count;
+    }
+}
+
+    </script>
+</body>
+</html>

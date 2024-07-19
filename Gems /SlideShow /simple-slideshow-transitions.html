@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slideshow with Scale Transform</title>
+<style>
+  .slideshow {
+    text-align: center;
+    margin-top: 20px;
+  }
+  .slideshow img {
+    width: 300px; /* Fixed width */
+    height: 300px; /* Fixed height */
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    transform-origin: center center;
+    opacity: 1;
+  }
+  .slideshow button {
+    margin: 10px;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="slideshow">
+  <img id="currentImage" src="image1.jpg" alt="Slideshow Image">
+  <br>
+  <button onclick="prevImage()">Previous</button>
+  <button onclick="nextImage()">Next</button>
+</div>
+
+<script>
+  // Array of image URLs
+  var images = [
+    'image1.jpg',
+    'image2.jpg',
+    'image3.jpg',
+    // Add more image URLs as needed
+  ];
+
+  // Initialize current image index
+  var currentImageIndex = 0;
+
+  // Function to update the image source with transition
+  function updateImage() {
+    var imgElement = document.getElementById('currentImage');
+    imgElement.style.transform = 'scale(0.8)'; // Scale down before changing
+    imgElement.style.opacity = '0'; // Fade out
+    setTimeout(function() {
+      imgElement.src = images[currentImageIndex];
+      imgElement.style.transform = 'scale(1)'; // Scale back to normal
+      imgElement.style.opacity = '1'; // Fade in
+    }, 500); // 500ms delay matches the transition duration
+  }
+
+  // Function for next image
+  function nextImage() {
+    currentImageIndex = (currentImageIndex + 1) % images.length;
+    updateImage();
+  }
+
+  // Function for previous image
+  function prevImage() {
+    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+    updateImage();
+  }
+
+  // Initialize the first image
+  updateImage();
+</script>
+
+</body>
+</html>

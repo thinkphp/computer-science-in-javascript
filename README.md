@@ -10,6 +10,7 @@ Learn X in Y minutes
 Programming Language Explorations 
 
 * https://rtoal.github.io/ple/
+* https://www.learneroo.com/modules/64/nodes/350
 
 JavaScript: The Good Parts 
 

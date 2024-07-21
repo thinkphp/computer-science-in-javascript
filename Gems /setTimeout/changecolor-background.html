@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Color Changer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffffff;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        #colorPicker {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 1em;
+        }
+
+        .font-size-controls {
+            margin-top: 20px;
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Background Color Changer</h1>
+        <input type="color" id="colorPicker">
+        <div class="font-size-controls">
+            <button id="increaseFont">Increase Font Size</button>
+            <button id="decreaseFont">Decrease Font Size</button>
+        </div>
+        <button id="startTimer">Start Timer</button>
+        <button id="resetTimer">Reset Timer</button>
+        <button id="randomColor">Random Color</button>
+    </div>
+    <script>
+        const colorPicker = document.getElementById('colorPicker');
+        const increaseFontButton = document.getElementById('increaseFont');
+        const decreaseFontButton = document.getElementById('decreaseFont');
+        const startTimerButton = document.getElementById('startTimer');
+        const resetTimerButton = document.getElementById('resetTimer');
+        const randomColorButton = document.getElementById('randomColor');
+        const container = document.querySelector('.container');
+
+        // Change background color
+        colorPicker.addEventListener('input', function() {
+            document.body.style.backgroundColor = colorPicker.value;
+        });
+
+        // Change font size
+        let fontSize = 16; // Initial font size in pixels
+
+        increaseFontButton.addEventListener('click', function() {
+            fontSize += 2;
+            container.style.fontSize = fontSize + 'px';
+        });
+
+        decreaseFontButton.addEventListener('click', function() {
+            fontSize -= 2;
+            container.style.fontSize = fontSize + 'px';
+        });
+
+        let timerId;
+
+        startTimerButton.addEventListener('click', function() {
+            // Clear any existing timer
+            clearTimeout(timerId);
+
+            // Start a new timer
+            timerId = setTimeout(function() {
+              const randomColor = getRandomColor();
+              document.body.style.backgroundColor = randomColor;
+                alert('Background color changed!');
+            }, 5000); // 5 seconds
+        });
+
+        resetTimerButton.addEventListener('click', function() {
+            clearTimeout(timerId);
+            alert('Timer reset!');
+        });
+
+        // Generate a random color
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // Set random color as background
+        randomColorButton.addEventListener('click', function() {
+            const randomColor = getRandomColor();
+            document.body.style.backgroundColor = randomColor;
+            colorPicker.value = randomColor;
+        });
+    </script>
+</body>
+</html>

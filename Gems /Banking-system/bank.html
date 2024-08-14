@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Banking System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 400px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #transaction-history {
+            margin-top: 20px;
+        }
+
+        #history-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        #history-list li {
+            background-color: #f1f1f1;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login/Register Form -->
+        <div id="auth-container">
+            <h2>Banking System</h2>
+            <div id="login-form">
+                <input type="text" id="username" placeholder="Username">
+                <input type="password" id="password" placeholder="Password">
+                <button onclick="login()">Login</button>
+                <button onclick="register()">Register</button>
+            </div>
+        </div>
+
+        <!-- User Dashboard -->
+        <div id="dashboard" class="hidden">
+            <h2>Welcome, <span id="user-name"></span></h2>
+            <p>Balance: $<span id="balance">0.00</span></p>
+
+            <div class="actions">
+                <button onclick="deposit()">Deposit</button>
+                <button onclick="withdraw()">Withdraw</button>
+                <button onclick="transfer()">Transfer</button>
+                <button onclick="showHistory()">Transaction History</button>
+                <button onclick="logout()">Logout</button>
+            </div>
+
+            <div id="transaction-history" class="hidden">
+                <h3>Transaction History</h3>
+                <ul id="history-list"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class User {
+            constructor(username, password) {
+                this.username = username;
+                this.password = password;
+                this.balance = 0;
+                this.transactionHistory = [];
+            }
+
+            deposit(amount) {
+                this.balance += amount;
+                this.transactionHistory.push(`Deposited $${amount.toFixed(2)}`);
+                saveData();
+            }
+
+            withdraw(amount) {
+                if (amount > this.balance) {
+                    return false;
+                }
+                this.balance -= amount;
+                this.transactionHistory.push(`Withdrew $${amount.toFixed(2)}`);
+                saveData();
+                return true;
+            }
+
+            transfer(amount, toUser) {
+                if (this.withdraw(amount)) {
+                    toUser.deposit(amount);
+                    this.transactionHistory.push(`Transferred $${amount.toFixed(2)} to ${toUser.username}`);
+                    toUser.transactionHistory.push(`Received $${amount.toFixed(2)} from ${this.username}`);
+                    saveData();
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        const bankSystem = {
+            users: JSON.parse(localStorage.getItem('users')) || {},
+            currentUser: null,
+
+            createUser(username, password) {
+                if (this.users[username]) {
+                    return false;
+                }
+                this.users[username] = new User(username, password);
+                saveData();
+                return true;
+            },
+
+            authenticateUser(username, password) {
+                const user = this.users[username];
+                if (user && user.password === password) {
+                    this.currentUser = user;
+                    return true;
+                }
+                return false;
+            },
+
+            logout() {
+                this.currentUser = null;
+            }
+        };
+
+        function saveData() {
+            localStorage.setItem('users', JSON.stringify(bankSystem.users));
+        }
+
+        // UI Functions
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (bankSystem.authenticateUser(username, password)) {
+                document.getElementById('auth-container').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+                document.getElementById('user-name').innerText = username;
+                document.getElementById('balance').innerText = bankSystem.currentUser.balance.toFixed(2);
+            } else {
+                alert("Invalid username or password");
+            }
+        }
+
+        function register() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (bankSystem.createUser(username, password)) {
+                alert("User registered successfully");
+            } else {
+                alert("Username already exists");
+            }
+        }
+
+        function logout() {
+            bankSystem.logout();
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('auth-container').classList.remove('hidden');
+        }
+
+        function deposit() {
+            const amount = parseFloat(prompt("Enter deposit amount:"));
+            if (!isNaN(amount) && amount > 0) {
+                bankSystem.currentUser.deposit(amount);
+                document.getElementById('balance').innerText = bankSystem.currentUser.balance.toFixed(2);
+            } else {
+                alert("Invalid amount");
+            }
+        }
+
+        function withdraw() {
+            const amount = parseFloat(prompt("Enter withdrawal amount:"));
+            if (!isNaN(amount) && amount > 0) {
+                if (bankSystem.currentUser.withdraw(amount)) {
+                    document.getElementById('balance').innerText = bankSystem.currentUser.balance.toFixed(2);
+                } else {
+                    alert("Insufficient funds");
+                }
+            } else {
+                alert("Invalid amount");
+            }
+        }
+
+        function transfer() {
+            const toUsername = prompt("Enter the username to transfer to:");
+            const amount = parseFloat(prompt("Enter transfer amount:"));
+            const toUser = bankSystem.users[toUsername];
+
+            if (toUser && !isNaN(amount) && amount > 0) {
+                if (bankSystem.currentUser.transfer(amount, toUser)) {
+                    document.getElementById('balance').innerText = bankSystem.currentUser.balance.toFixed(2);
+                } else {
+                    alert("Insufficient funds");
+                }
+            } else {
+                alert("Invalid username or amount");
+            }
+        }
+
+        function showHistory() {
+            const historyList = document.getElementById('history-list');
+            historyList.innerHTML = '';
+
+            bankSystem.currentUser.transactionHistory.forEach(transaction => {
+                const li = document.createElement('li');
+                li.innerText = transaction;
+                historyList.appendChild(li);
+            });
+
+            document.getElementById('transaction-history').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

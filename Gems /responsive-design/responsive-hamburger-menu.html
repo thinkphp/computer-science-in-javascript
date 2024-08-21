@@ -6,76 +6,78 @@
     <title>Responsive Hamburger Menu</title>
 
     <style>
-    body {
-    margin: 0;
-    padding: 0;
-}
+        body {
+            margin: 0;
+            padding: 0;
+        }
 
-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px;
-    background-color: #333;
-    color: #fff;
-}
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+        }
 
-.menu-icon {
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    cursor: pointer;
-}
+        .menu-icon {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            width: 30px;
+            height: 20px;
+        }
 
-.bar {
-    width: 30px;
-    height: 3px;
-    background-color: #fff;
-}
+        .bar {
+            width: 30px;
+            height: 3px;
+            background-color: #fff;
+        }
 
-.menu {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
+        .menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
 
-.menu li {
-    margin-right: 20px;
-}
+        .menu li {
+            margin-right: 20px;
+        }
 
-.menu a {
-    text-decoration: none;
-    color: #fff;
-}
+        .menu a {
+            text-decoration: none;
+            color: #fff;
+        }
 
-@media screen and (max-width: 768px) {
-    .menu {
-        display: none;
-    }
+        @media screen and (max-width: 768px) {
+            .menu {
+                display: none;
+            }
 
-    .menu-icon {
-        display: flex;
-    }
+            .menu-icon {
+                display: flex;
+            }
 
-    .menu.active {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-        padding: 20px;
-    }
+            .menu.active {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.8);
+                padding: 20px;
+            }
 
-    .menu.active li {
-        margin-bottom: 20px;
-    }
-}
+            .menu.active li {
+                margin-bottom: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -94,15 +96,15 @@ nav {
     </nav>
 
     <div class="content">
-        </div>
+    </div>
 
     <script>
-    const menuIcon = document.querySelector('.menu-icon');
-const menu = document.querySelector('.menu');
+        const menuIcon = document.querySelector('.menu-icon');
+        const menu = document.querySelector('.menu');
 
-menuIcon.addEventListener('click', () => {
-    menu.classList.toggle('active');
-});
+        menuIcon.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
     </script>
 </body>
 </html>

@@ -1,3 +1,6 @@
+### localStorage
+
+```
 // Storing data in localStorage
 localStorage.setItem('username', 'JohnDoe');
 localStorage.setItem('userAge', 30);
@@ -14,3 +17,4 @@ localStorage.removeItem('username');
 
 // Clearing all data from localStorage
 localStorage.clear();
+```

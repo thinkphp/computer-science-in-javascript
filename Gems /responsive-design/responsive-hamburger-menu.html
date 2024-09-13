@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Responsive Hamburger Menu</title>
-
     <style>
         body {
             margin: 0;
             padding: 0;
+            font-family: Arial, sans-serif;
         }
-
         nav {
             display: flex;
             align-items: center;
@@ -19,7 +18,6 @@
             background-color: #333;
             color: #fff;
         }
-
         .menu-icon {
             display: none;
             flex-direction: column;
@@ -27,55 +25,58 @@
             cursor: pointer;
             width: 30px;
             height: 20px;
+            z-index: 2;
         }
-
         .bar {
             width: 30px;
             height: 3px;
             background-color: #fff;
+            transition: 0.4s;
         }
-
         .menu {
             display: flex;
             list-style: none;
             margin: 0;
             padding: 0;
         }
-
         .menu li {
             margin-right: 20px;
         }
-
         .menu a {
             text-decoration: none;
             color: #fff;
         }
-
         @media screen and (max-width: 768px) {
             .menu {
                 display: none;
             }
-
             .menu-icon {
                 display: flex;
             }
-
             .menu.active {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                position: absolute;
+                position: fixed;
                 top: 0;
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background-color: rgba(0, 0, 0, 0.8);
-                padding: 20px;
+                background-color: rgba(0, 0, 0, 0.9);
+                z-index: 1;
             }
-
             .menu.active li {
-                margin-bottom: 20px;
+                margin: 20px 0;
+            }
+            .menu-icon.active .bar:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            .menu-icon.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            .menu-icon.active .bar:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
             }
         }
     </style>
@@ -94,15 +95,15 @@
             <li><a href="#">Contact</a></li>
         </ul>
     </nav>
-
     <div class="content">
+        <h1>Welcome to our website</h1>
+        <p>This is a sample content area. The menu is now fully responsive!</p>
     </div>
-
     <script>
         const menuIcon = document.querySelector('.menu-icon');
         const menu = document.querySelector('.menu');
-
         menuIcon.addEventListener('click', () => {
+            menuIcon.classList.toggle('active');
             menu.classList.toggle('active');
         });
     </script>

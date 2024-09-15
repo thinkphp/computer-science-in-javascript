@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Tab Component with Event Listeners</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #tab-container {
+            width: 60%;
+            margin: 50px auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: space-around;
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tab-button {
+            padding: 10px 20px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+        }
+
+        .tab-button:hover {
+            background-color: #ddd;
+        }
+
+        .tab-button.active {
+            font-weight: bold;
+            border-bottom: 3px solid #007BFF;
+            color: #007BFF;
+        }
+
+        .tab-contents {
+            padding: 20px;
+        }
+
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div id="tab-container">
+        <div class="tab-buttons">
+            <button class="tab-button active" data-tab="tab1">Tab 1</button>
+            <button class="tab-button" data-tab="tab2">Tab 2</button>
+            <button class="tab-button" data-tab="tab3">Tab 3</button>
+        </div>
+        <div class="tab-contents">
+            <div id="tab1" class="tab-content active">
+                <h2>Content for Tab 1</h2>
+                <p>This is the content of the first tab.</p>
+            </div>
+            <div id="tab2" class="tab-content">
+                <h2>Content for Tab 2</h2>
+                <p>This is the content of the second tab.</p>
+            </div>
+            <div id="tab3" class="tab-content">
+                <h2>Content for Tab 3</h2>
+                <p>This is the content of the third tab.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Function to handle tab switching
+    function showTab(tabId) {
+        // Remove 'active' class from all tab contents
+        const tabs = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => tab.classList.remove('active'));
+
+        // Remove 'active' class from all tab buttons
+        const buttons = document.querySelectorAll('.tab-button');
+        buttons.forEach(button => button.classList.remove('active'));
+
+        // Add 'active' class to the clicked tab and its corresponding content
+        document.getElementById(tabId).classList.add('active');
+        document.querySelector(`button[data-tab="${tabId}"]`).classList.add('active');
+    }
+
+    // Add event listeners to all tab buttons
+    const tabButtons = document.querySelectorAll('.tab-button');
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const tabId = this.getAttribute('data-tab');
+            showTab(tabId);
+        });
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+.img-thumbnail {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%;
+  max-width: 300px;
+}
+
+.img-thumbnail:hover {
+  opacity: 0.7;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.9);
+}
+
+/* Modal Content (image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+/* Caption of Modal Image */
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation */
+.modal-content, #caption {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {transform: scale(0)}
+  to {transform: scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .modal-content {
+    width: 100%;
+  }
+}
+</style>
+</head>
+<body>
+
+<h2>Dynamic Image Modal from JavaScript Array</h2>
+<p>Click on any dynamically generated image to view it in a larger modal.</p>
+
+<!-- Image Container -->
+<div id="image-container"></div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+
+<script>
+// Define an array of image objects
+var imagesArray = [
+  {src: 'images/1.jpg', alt: 'Snowy Mountains'},
+  {src: 'images/2.jpg', alt: 'Green Forest'},
+  {src: 'images/3.jpg', alt: 'Serene Lake'},
+  {src: 'images/4.jpg', alt: 'Serene Lake'},
+  {src: 'images/5.jpg', alt: 'Serene Lake'},
+  {src: 'images/6.jpg', alt: 'Serene Lake'}
+  // Add more image objects as needed
+];
+
+// Get the container where images will be appended
+var imageContainer = document.getElementById('image-container');
+
+// Loop through the array and create image elements dynamically
+imagesArray.forEach(function(image) {
+  var imgElement = document.createElement('img');
+  imgElement.src = image.src;
+  imgElement.alt = image.alt;
+  imgElement.className = 'img-thumbnail';
+  imageContainer.appendChild(imgElement);
+});
+
+// Get the modal elements
+var modal = document.getElementById("myModal");
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+
+// Add click event listeners to the dynamically created images
+imageContainer.addEventListener('click', function(event) {
+  if (event.target.tagName === 'IMG') {
+    modal.style.display = "block";
+    modalImg.src = event.target.src;
+    captionText.innerHTML = event.target.alt;
+  }
+});
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+</script>
+
+</body>
+</html>

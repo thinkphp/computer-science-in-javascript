@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+.img-thumbnail {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%;
+  max-width: 300px;
+}
+
+.img-thumbnail:hover {
+  opacity: 0.7;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.9);
+}
+
+/* Modal Content (image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+/* Caption of Modal Image */
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation */
+.modal-content, #caption {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {transform: scale(0)}
+  to {transform: scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Next and Previous Buttons */
+.modal-navigation {
+  position: absolute;
+  top: 50%;
+  font-size: 40px;
+  font-weight: bold;
+  color: #f1f1f1;
+  padding: 16px;
+  cursor: pointer;
+  user-select: none;
+}
+
+#prevBtn {
+  left: 20px;
+}
+
+#nextBtn {
+  right: 20px;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .modal-content {
+    width: 100%;
+  }
+}
+</style>
+</head>
+<body>
+
+<h2>Dynamic Image Modal with Next/Previous Navigation</h2>
+<p>Click on any dynamically generated image to view it in a larger modal.</p>
+
+<!-- Image Container -->
+<div id="image-container"></div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+
+  <!-- Navigation Buttons -->
+  <span id="prevBtn" class="modal-navigation">&#10094;</span>
+  <span id="nextBtn" class="modal-navigation">&#10095;</span>
+</div>
+
+<script>
+// Define an array of image objects
+var imagesArray = [
+  {src: 'images/1.jpg', alt: 'Snowy Mountains'},
+  {src: 'images/2.jpg', alt: 'Snowy Mountains'},
+  {src: 'images/3.jpg', alt: 'Snowy Mountains'},
+  {src: 'images/4.jpg', alt: 'Snowy Mountains'},
+  {src: 'images/5.jpg', alt: 'Snowy Mountains'},
+  {src: 'images/6.jpg', alt: 'Snowy Mountains'},  
+  // Add more image objects as needed
+];
+
+// Get the container where images will be appended
+var imageContainer = document.getElementById('image-container');
+
+// Loop through the array and create image elements dynamically
+imagesArray.forEach(function(image, index) {
+  var imgElement = document.createElement('img');
+  imgElement.src = image.src;
+  imgElement.alt = image.alt;
+  imgElement.className = 'img-thumbnail';
+  imgElement.dataset.index = index;  // Store the index of the image
+  imageContainer.appendChild(imgElement);
+});
+
+// Get the modal elements
+var modal = document.getElementById("myModal");
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+var currentImageIndex = 0;  // Track the index of the currently displayed image
+
+// Show the modal with the clicked image
+imageContainer.addEventListener('click', function(event) {
+  if (event.target.tagName === 'IMG') {
+    var imgIndex = parseInt(event.target.dataset.index);  // Get the image index
+    showImageInModal(imgIndex);
+  }
+});
+
+// Function to display the image in the modal
+function showImageInModal(index) {
+  currentImageIndex = index;
+  modal.style.display = "block";
+  modalImg.src = imagesArray[index].src;
+  captionText.innerHTML = imagesArray[index].alt;
+}
+
+// Close the modal when the user clicks on <span> (x)
+var span = document.getElementsByClassName("close")[0];
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// Next and Previous functionality
+var nextBtn = document.getElementById("nextBtn");
+var prevBtn = document.getElementById("prevBtn");
+
+nextBtn.onclick = function() {
+  currentImageIndex = (currentImageIndex + 1) % imagesArray.length;  // Loop to the first image
+  showImageInModal(currentImageIndex);
+}
+
+prevBtn.onclick = function() {
+  currentImageIndex = (currentImageIndex - 1 + imagesArray.length) % imagesArray.length;  // Loop to the last image
+  showImageInModal(currentImageIndex);
+}
+</script>
+
+</body>
+</html>

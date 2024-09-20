@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Image Gallery Slideshow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            flex-grow: 1;
+        }
+        .slideshow-container {
+            position: relative;
+            max-width: 100%;
+            height: 400px;
+            margin: auto;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+        .caption {
+            color: #f2f2f2;
+            font-size: 15px;
+            padding: 8px 12px;
+            position: absolute;
+            bottom: 8px;
+            width: 100%;
+            text-align: center;
+            background-color: rgba(0,0,0,0.6);
+        }
+        .dots {
+            text-align: center;
+            padding: 10px;
+        }
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+        .active, .dot:hover {
+            background-color: #717171;
+        }
+        .fade {
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+        @keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Dynamic Image Gallery Slideshow</h1>
+    </header>
+    <div class="container">
+        <div id="slideshow-container" class="slideshow-container">
+            <!-- Slides will be dynamically inserted here -->
+        </div>
+        <div id="dots-container" class="dots">
+            <!-- Dots will be dynamically inserted here -->
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Dynamic Image Gallery Slideshow. All rights reserved.</p>
+    </footer>
+    <script>
+        const images = [
+            { src: "image1.jpg", alt: "Placeholder 1", caption: "Caption for Image 1" },
+            { src: "image2.jpg", alt: "Placeholder 2", caption: "Caption for Image 2" },
+            { src: "image3.jpg", alt: "Placeholder 3", caption: "Caption for Image 3" },
+            { src: "image2.jpg", alt: "Placeholder 4", caption: "Caption for Image 4" },
+            { src: "image1.jpg", alt: "Placeholder 5", caption: "Caption for Image 5" }
+        ];
+
+        let slideIndex = 1;
+        let slideInterval;
+
+        function createSlideshow() {
+            const slideshowContainer = document.getElementById('slideshow-container');
+            const dotsContainer = document.getElementById('dots-container');
+
+            images.forEach((image, index) => {
+                // Create slide
+                const slide = document.createElement('div');
+                slide.className = 'slide fade';
+                slide.innerHTML = `
+                    <img src="${image.src}" alt="${image.alt}">
+                    <div class="caption">${image.caption}</div>
+                `;
+                slideshowContainer.appendChild(slide);
+
+                // Create dot
+                const dot = document.createElement('span');
+                dot.className = 'dot';
+                dot.dataset.slide = index + 1;
+                dotsContainer.appendChild(dot);
+            });
+
+            // Add navigation buttons
+            const prevButton = document.createElement('a');
+            prevButton.className = 'prev';
+            prevButton.innerHTML = '&#10094;';
+            slideshowContainer.appendChild(prevButton);
+
+            const nextButton = document.createElement('a');
+            nextButton.className = 'next';
+            nextButton.innerHTML = '&#10095;';
+            slideshowContainer.appendChild(nextButton);
+
+            // Add event listeners
+            prevButton.addEventListener('click', () => changeSlide(-1));
+            nextButton.addEventListener('click', () => changeSlide(1));
+
+            document.querySelectorAll('.dot').forEach(dot => {
+                dot.addEventListener('click', function() {
+                    currentSlide(parseInt(this.dataset.slide));
+                });
+            });
+        }
+
+        function showSlides(n) {
+            const slides = document.getElementsByClassName("slide");
+            const dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";
+            dots[slideIndex-1].className += " active";
+        }
+
+        function changeSlide(n) {
+            clearInterval(slideInterval);
+            showSlides(slideIndex += n);
+            startSlideshow();
+        }
+
+        function currentSlide(n) {
+            clearInterval(slideInterval);
+            showSlides(slideIndex = n);
+            startSlideshow();
+        }
+
+        function startSlideshow() {
+            slideInterval = setInterval(() => {
+                changeSlide(1);
+            }, 5000); // Change slide every 5 seconds
+        }
+
+        // Initialize the slideshow
+        createSlideshow();
+        showSlides(slideIndex);
+        startSlideshow();
+    </script>
+</body>
+</html>

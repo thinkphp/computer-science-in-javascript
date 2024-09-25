@@ -1,6 +1,4 @@
-## Computer Science in JavaScript
-
-# Introduction to JavaScript - Stanford Course Outline
+# Computer Science in JavaScript
 
 ## Week 1: JavaScript Basics
 

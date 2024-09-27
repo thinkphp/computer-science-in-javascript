@@ -1,5 +1,83 @@
 # Computer Science in JavaScript
 
+# Introduction to JavaScript Programming
+## Stanford University
+
+### Course Overview
+This course introduces students to the fundamentals of JavaScript programming, covering core concepts and practical applications. By the end of this course, students will have a solid foundation in JavaScript and web development principles.
+
+### Week 1: Introduction to JavaScript and Development Environment
+- What is JavaScript?
+- Setting up the development environment
+- Introduction to web browsers and developer tools
+- Writing and running your first JavaScript program
+
+### Week 2: JavaScript Basics
+- Variables and data types
+- Operators
+- Control flow statements (if, else, switch)
+- Loops (for, while, do-while)
+
+### Week 3: Functions and Scope
+- Function declaration and expression
+- Arrow functions
+- Function parameters and return values
+- Scope and closures
+
+### Week 4: Arrays and Objects
+- Working with arrays
+- Array methods (map, filter, reduce)
+- Object literals
+- Object methods and 'this' keyword
+
+### Week 5: DOM Manipulation
+- Understanding the Document Object Model (DOM)
+- Selecting and modifying DOM elements
+- Creating and removing elements
+- Event handling
+
+### Week 6: Asynchronous JavaScript
+- Callbacks
+- Promises
+- Async/Await
+- Fetch API and AJAX
+
+### Week 7: Error Handling and Debugging
+- Try-catch blocks
+- Throwing and handling exceptions
+- Debugging techniques
+- Browser developer tools for debugging
+
+### Week 8: ES6+ Features
+- Let and const
+- Template literals
+- Destructuring
+- Spread and rest operators
+- Modules
+
+### Week 9: Object-Oriented JavaScript
+- Prototypes and inheritance
+- ES6 Classes
+- Getters and setters
+- Static methods
+
+### Week 10: Modern JavaScript Development
+- npm and package management
+- Bundlers (Webpack, Rollup)
+- Transpilers (Babel)
+- Introduction to frameworks (React, Vue, or Angular)
+
+### Final Project
+Students will develop a comprehensive web application using JavaScript that demonstrates their understanding of the concepts covered in the course. The project will involve creating a practical, interactive web application that incorporates multiple aspects of JavaScript programming.
+
+### Assessment
+- Weekly programming assignments (40%)
+- Midterm exam (20%)
+- Final project (30%)
+- Class participation and quizzes (10%)
+
+# _____________
+
 ## Week 1: JavaScript Basics
 
 ### 1.1 Introduction to JavaScript

@@ -1,6 +1,5 @@
 # Computer Science in JavaScript
 
-# Introduction to JavaScript Programming
 ## Stanford University
 
 ### Course Overview

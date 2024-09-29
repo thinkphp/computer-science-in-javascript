@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tooltip Example with Button</title>
+    <style>
+        /* Stil pentru tooltip folosind atributul data-tooltip */
+        [data-tooltip]:hover:after {
+            content: attr(data-tooltip);
+            background: #333;
+            color: #fff;
+            padding: 5px;
+            position: absolute;
+            top: 100%; /* Afișează tooltip-ul sub element */
+            left: 0px;
+            white-space: nowrap;
+            z-index: 10;
+            border-radius: 5px; /* Colțuri rotunjite */
+        }
+
+        /* Stil pentru elementul button */
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            position: relative; /* Necesită pentru poziționarea absolută a tooltip-ului */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Tooltip Example with Button</h1>
+    <p>Mută mouse-ul peste buton pentru a vedea tooltip-ul:</p>
+
+    <!-- Buton cu atributul data-tooltip -->
+    <button data-tooltip="click me">Hover me</button>
+
+</body>
+</html>

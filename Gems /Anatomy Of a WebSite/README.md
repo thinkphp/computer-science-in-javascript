@@ -93,5 +93,3 @@ Pentru a face cursul mai interactiv și practic, ați putea:
 3. Discuta despre cele mai bune practici și tendințe actuale pentru fiecare categorie.
 4. Explora modul în care aceste componente lucrează împreună pentru a crea o experiență de utilizare coerentă.
 5. Analiza website-uri populare pentru a identifica aceste componente în acțiune.
-
-Doriți să aprofundăm vreuna dintre aceste categorii sau să discutăm despre modalități de a structura cursul în jurul acestei liste de componente?

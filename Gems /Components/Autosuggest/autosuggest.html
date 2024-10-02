@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .autosuggest-container {
+            width: 300px;
+            margin: 20px;
+            position: relative;
+        }
+        .input-wrapper {
+            position: relative;
+        }
+        #suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            border: 1px solid #ccc;
+            border-top: none;
+            background-color: white;
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+        #suggestions li {
+            padding: 10px;
+            cursor: pointer;
+        }
+        #suggestions li:hover {
+            background-color: #f0f0f0;
+        }
+        #suggestions li.selected {
+            background-color: #e0e0e0;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="autosuggest-container">
+        <div class="input-wrapper">
+            <input type="text" id="autoInput" placeholder="Start typing... Use ↑↓ to navigate, Enter to select">
+            <ul id="suggestions"></ul>
+        </div>
+    </div>
+
+    <script>
+        // Sample array of suggestions
+        const suggestions = [
+            'apple', 'apartment', 'application',
+            'banana', 'balloon', 'beach',
+            'car', 'camera', 'castle',
+            'dog', 'dolphin', 'dragon',
+            'elephant', 'eagle', 'earth',
+            'fish', 'flower', 'forest'
+        ];
+
+        const input = document.getElementById('autoInput');
+        const suggestionsList = document.getElementById('suggestions');
+        let selectedIndex = -1;
+        let matchingSuggestions = [];
+
+        function updateSuggestions() {
+            const inputValue = input.value.toLowerCase();
+            suggestionsList.innerHTML = '';
+            selectedIndex = -1;
+            matchingSuggestions = [];
+
+            if (inputValue.length === 0) {
+                return;
+            }
+
+            matchingSuggestions = suggestions.filter(suggestion => 
+                suggestion.toLowerCase().startsWith(inputValue)
+            );
+
+            matchingSuggestions.forEach((suggestion, index) => {
+                const li = document.createElement('li');
+                li.textContent = suggestion;
+                li.addEventListener('click', function() {
+                    selectSuggestion(index);
+                });
+                li.addEventListener('mouseover', function() {
+                    updateSelection(index);
+                });
+                suggestionsList.appendChild(li);
+            });
+        }
+
+        function updateSelection(index) {
+            const items = suggestionsList.getElementsByTagName('li');
+            for (let i = 0; i < items.length; i++) {
+                items[i].classList.remove('selected');
+            }
+            if (index >= 0 && index < items.length) {
+                items[index].classList.add('selected');
+                selectedIndex = index;
+            }
+        }
+
+        function selectSuggestion(index) {
+            if (index >= 0 && index < matchingSuggestions.length) {
+                input.value = matchingSuggestions[index];
+                suggestionsList.innerHTML = '';
+                selectedIndex = -1;
+            }
+        }
+
+        input.addEventListener('input', updateSuggestions);
+
+        input.addEventListener('keydown', function(e) {
+            const items = suggestionsList.getElementsByTagName('li');
+            
+            switch(e.key) {
+                case 'ArrowDown':
+                    e.preventDefault();
+                    if (selectedIndex < items.length - 1) {
+                        updateSelection(selectedIndex + 1);
+                        items[selectedIndex].scrollIntoView({block: 'nearest'});
+                    }
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    if (selectedIndex > 0) {
+                        updateSelection(selectedIndex - 1);
+                        items[selectedIndex].scrollIntoView({block: 'nearest'});
+                    }
+                    break;
+                case 'Enter':
+                    if (selectedIndex >= 0) {
+                        selectSuggestion(selectedIndex);
+                    }
+                    break;
+                case 'Escape':
+                    suggestionsList.innerHTML = '';
+                    selectedIndex = -1;
+                    break;
+            }
+        });
+
+        // Close suggestions when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.autosuggest-container')) {
+                suggestionsList.innerHTML = '';
+                selectedIndex = -1;
+            }
+        });
+    </script>
+</body>
+</html>

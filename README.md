@@ -342,9 +342,9 @@ Students will work on a final project that incorporates the concepts learned thr
 
 #### References
 
-Learn X in Y minutes 
+https://web.stanford.edu/class/cs98si/slides/overview.html
 
-* https://learnxinyminutes.com/docs/javascript/
+https://learnxinyminutes.com/docs/javascript/
 
 Programming Language Explorations 
 

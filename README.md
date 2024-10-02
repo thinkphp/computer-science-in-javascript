@@ -346,6 +346,8 @@ https://web.stanford.edu/class/cs98si/slides/overview.html
 
 https://learnxinyminutes.com/docs/javascript/
 
+https://github.com/codepo8/javascript-questions
+
 Programming Language Explorations 
 
 * https://rtoal.github.io/ple/

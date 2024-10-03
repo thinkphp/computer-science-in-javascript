@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table to Pie Chart with Cursor-following Tooltip</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 5px 10px;
+        }
+        #tooltip {
+            position: fixed;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <table id="dataTable">
+        <tr>
+            <th>Category</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>Category A</td>
+            <td>30</td>
+        </tr>
+        <tr>
+            <td>Category B</td>
+            <td>50</td>
+        </tr>
+        <tr>
+            <td>Category C</td>
+            <td>20</td>
+        </tr>
+    </table>
+
+    <div style="position: relative;">
+        <canvas id="pieChart" width="400" height="400"></canvas>
+        <div id="tooltip"></div>
+    </div>
+
+    <script>
+        function drawPieChart() {
+            const table = document.getElementById('dataTable');
+            const canvas = document.getElementById('pieChart');
+            const ctx = canvas.getContext('2d');
+            const tooltip = document.getElementById('tooltip');
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = Math.min(centerX, centerY) * 0.8;
+
+            let total = 0;
+            const data = [];
+            const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'];
+
+            // Extract data from the table
+            for (let i = 1; i < table.rows.length; i++) {
+                const value = parseFloat(table.rows[i].cells[1].textContent);
+                total += value;
+                data.push({
+                    label: table.rows[i].cells[0].textContent,
+                    value: value,
+                    color: colors[i - 1] || '#' + Math.floor(Math.random()*16777215).toString(16)
+                });
+            }
+
+            // Draw the pie chart
+            let startAngle = 0;
+            for (let item of data) {
+                const sliceAngle = 2 * Math.PI * item.value / total;
+                
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, startAngle, startAngle + sliceAngle);
+                ctx.lineTo(centerX, centerY);
+                ctx.fillStyle = item.color;
+                ctx.fill();
+
+                // Add labels
+                const middleAngle = startAngle + sliceAngle / 2;
+                const labelX = centerX + Math.cos(middleAngle) * (radius * 0.6);
+                const labelY = centerY + Math.sin(middleAngle) * (radius * 0.6);
+                
+                ctx.fillStyle = 'black';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(item.label, labelX, labelY);
+
+                startAngle += sliceAngle;
+            }
+
+            // Add event listener for tooltip
+            canvas.addEventListener('mousemove', showTooltip);
+            canvas.addEventListener('mouseout', () => {
+                tooltip.style.opacity = 0;
+            });
+
+            function showTooltip(e) {
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const dx = x - centerX;
+                const dy = y - centerY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance <= radius) {
+                    let angle = Math.atan2(dy, dx);
+                    if (angle < 0) angle += 2 * Math.PI;
+
+                    let startAngle = 0;
+                    for (let item of data) {
+                        const sliceAngle = 2 * Math.PI * item.value / total;
+                        if (angle >= startAngle && angle < startAngle + sliceAngle) {
+                            tooltip.innerHTML = `${item.label}: ${item.value} (${(item.value / total * 100).toFixed(1)}%)`;
+                            
+                            // Position tooltip near cursor
+                            const tooltipX = e.clientX + 15;
+                            const tooltipY = e.clientY + 15;
+
+                            // Adjust if tooltip would go off-screen
+                            const rightEdge = window.innerWidth - tooltip.offsetWidth - 10;
+                            const bottomEdge = window.innerHeight - tooltip.offsetHeight - 10;
+
+                            tooltip.style.left = Math.min(tooltipX, rightEdge) + 'px';
+                            tooltip.style.top = Math.min(tooltipY, bottomEdge) + 'px';
+                            tooltip.style.opacity = 1;
+                            return;
+                        }
+                        startAngle += sliceAngle;
+                    }
+                }
+
+                tooltip.style.opacity = 0;
+            }
+        }
+
+        // Call the function when the page loads
+        window.onload = drawPieChart;
+    </script>
+</body>
+</html>

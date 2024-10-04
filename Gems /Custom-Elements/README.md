@@ -102,4 +102,9 @@ We'll create a custom button component that changes its text when clicked. This 
 - Simply open the HTML file in a web browser, and you will see the button. Clicking the button will change its text, demonstrating the interactivity of the custom component.
 
 ### Conclusion:
-This simple custom button component is a great starting point for students to understand how custom elements work in JavaScript. They can expand on this foundation by adding more features or creating more complex components!
+This simple custom button component is a great starting point for students to understand how custom elements work in JavaScript. They can expand on this foundation by adding more features or  creating more complex components!
+
+
+#### References
+
+https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements

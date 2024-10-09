@@ -1,0 +1,134 @@
+<html>
+<head>
+  <style media="screen">
+           body {
+             font-family: Arial, sans-serif;
+             display:flex;
+             justify-content: center;
+             align-items: center;
+             height: 100vh;
+             margin: 0;
+             background-color: #f0f0f0;
+           }
+
+           .login-container {
+
+             background-color: white;
+             padding: 2rem;
+             border-radius: 8px;
+             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+             width: 300px;
+           }
+
+           h2 {
+             text-align: center;
+             margin-bottom: 1.5em;
+           }
+
+           .form-group {
+
+             margin-bottom: 1rem;
+           }
+
+           label {
+
+               display: block;
+               margin-bottom: 0.5rem;
+           }
+
+           input[type="text"],input[type="password"] {
+
+             width: 100%;
+             padding: 0.5rem;
+             border: 1px solid #ccc;
+             border-radius: 5px;
+           }
+
+           button {
+
+               width: 100%;
+               padding: 0.75rem;
+               background-color: lightgreen;
+               border-radius: 5px;
+               color: blue;
+               cursor: pointer;
+           }
+
+           button:hover{
+               background-color: #ccc;
+           }
+
+          .error {
+            color: red
+          }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+
+      <h2>Login</h2>
+
+      <form id="loginForm">
+
+         <div class="form-group">
+
+               <label for="username">Username</label>
+               <input type="text" id="username" name="username" required>
+               <div id="usernameError" class="error"></div>
+         </div>
+
+         <div class="form-group">
+
+           <label for="password">Password</label>
+           <input type="text" id="password" name="password" required>
+           <div id="passwordError" class="error"></div>
+
+         </div>
+
+         <button type="submit">Login</button>
+      </form>
+  </div>
+<script>
+
+   //am selectat form-ul care contine butoane si entry
+  const loginForm = document.getElementById("loginForm")
+  const username = document.getElementById("username")
+
+  loginForm.addEventListener("submit", function( event ) {
+
+              event.preventDefault();
+
+              let isValid = true
+
+              if(username.value.trim() === '') {
+                usernameError.textContent = "Username is required!"
+                isValid = false
+              }else {
+                usernameError.textContent = ""
+              }
+
+              if(username.value.length < 6) {
+                usernameError.textContent = "Username must be at least 6 characters long!"
+                isValid = false
+              } else {
+                usernameError.textContent = ""
+              }
+
+
+              if(password.value.length < 6) {
+                passwordError.textContent = "Password must be at least 6 characters long!"
+                isValid = false
+              } else {
+                passwordError.textContent = ""
+              }
+
+              if(isValid) {
+                alert("Login Successful")
+              }
+  })
+
+</script>
+
+</body>
+</html>

@@ -108,3 +108,5 @@ This simple custom button component is a great starting point for students to un
 #### References
 
 https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements
+
+https://kinsta.com/blog/web-components/

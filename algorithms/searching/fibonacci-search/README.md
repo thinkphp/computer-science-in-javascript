@@ -70,3 +70,9 @@ if (rezultat !== -1) {
 } else {
     console.log('Elementul nu a fost găsit în listă');
 }
+
+Output așteptat:
+```
+Elementul se află la indexul 8
+```
+

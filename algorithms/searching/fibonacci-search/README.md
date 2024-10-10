@@ -72,6 +72,7 @@ if (rezultat !== -1) {
 }
 
 Output așteptat:
+
 ```
 Elementul se află la indexul 8
 ```

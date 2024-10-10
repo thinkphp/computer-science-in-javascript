@@ -70,10 +70,29 @@ if (rezultat !== -1) {
 } else {
     console.log('Elementul nu a fost găsit în listă');
 }
+```
 
-Output așteptat:
-
+### Output așteptat:
 ```
 Elementul se află la indexul 8
 ```
 
+## Utilizare
+
+1. Copiază codul în fișierul tău JavaScript.
+2. Creează o listă sortată de elemente.
+3. Apelează funcția `fibonacciSearch(arr, elementCautat)` pentru a găsi indexul elementului căutat.
+
+## Contribuții
+
+Orice contribuție este binevenită! Te rugăm să creezi un pull request sau să deschizi un issue dacă ai sugestii de îmbunătățire.
+
+## Licență
+
+Acest proiect este licențiat sub [MIT License](LICENSE).
+```
+
+### Explicații suplimentare:
+- Acest fișier **README.md** descrie algoritmul, cum funcționează, și cum poate fi utilizat în JavaScript.
+- Se oferă un exemplu clar de cod și se menționează output-ul așteptat.
+- Include o secțiune de contribuții și licență, ceea ce este o bună practică pentru proiectele open-source.

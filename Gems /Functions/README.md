@@ -79,3 +79,60 @@ functieExterna();
 - Funcțiile globale ar trebui folosite cu grijă, deoarece prea multe funcții globale pot duce la conflicte sau probleme de gestionare a codului (denumit și "poluarea spațiului global").
 
 Dacă ai alte întrebări legate de funcții globale și locale sau de scope-ul în JavaScript, mă poți întreba!
+
+### ----------
+
+
+În JavaScript, comportamentul cuvântului cheie `this` diferă în funcție de modul în care funcția este definită și apelată. Diferența pe care ai menționat-o între `function()` și funcțiile săgeată (`=>`) este legată de modul în care fiecare tip de funcție gestionează contextul lui `this`.
+
+### `this` în funcții normale (definite cu `function()`)
+
+Când folosești o **funcție clasică** (`function()`), valoarea lui `this` este determinată dinamic, adică depinde de contextul în care funcția este apelată. În cazul în care funcția este folosită ca **handler pentru un eveniment**, cum ar fi un click pe un buton, `this` va face referire la elementul pe care s-a declanșat evenimentul, adică la butonul respectiv.
+
+Exemplu:
+
+```javascript
+document.getElementById("MyButton").addEventListener('click', function() {
+    console.log(this); // Se referă la butonul pe care s-a făcut click
+});
+```
+
+Aici, `this` în interiorul funcției este legat de butonul pe care s-a făcut click (`#MyButton`).
+
+### `this` în funcții săgeată (Arrow Functions)
+
+Funcțiile săgeată (`=>`), introduse în ES6, **nu au propriul lor context** pentru `this`. În schimb, ele „moștenesc” valoarea lui `this` din mediul în care sunt definite. Cu alte cuvinte, funcțiile săgeată **nu schimbă** valoarea lui `this`, ci păstrează contextul din afara lor.
+
+Dacă folosești o funcție săgeată într-un handler de eveniment, `this` **nu** va face referire la elementul care a declanșat evenimentul, ci la contextul în care a fost definită funcția, care în cazul general este obiectul global `window`.
+
+Exemplu:
+
+```javascript
+document.getElementById("MyButton").addEventListener('click', () => {
+    console.log(this); // Se referă la `window` (sau la contextul lexical exterior)
+});
+```
+
+Aici, `this` nu face referire la butonul pe care s-a făcut click, ci la obiectul global `window` (sau alt context din care a fost apelată funcția). 
+
+### Recapitulare
+
+- **Funcții normale (function)**: `this` este determinat dinamic și depinde de modul în care funcția este apelată. În cazul unui eveniment, `this` face referire la elementul care a declanșat evenimentul.
+  
+  ```javascript
+  document.getElementById("MyButton").addEventListener('click', function() {
+      console.log(this); // Se referă la buton
+  });
+  ```
+
+- **Funcții săgeată (arrow functions)**: `this` este capturat lexical din mediul în care funcția este definită. Într-un handler de eveniment, `this` nu se referă la elementul care a declanșat evenimentul, ci la contextul exterior (de obicei `window`).
+
+  ```javascript
+  document.getElementById("MyButton").addEventListener('click', () => {
+      console.log(this); // Se referă la `window`
+  });
+  ```
+
+Această diferență poate fi esențială în manipularea evenimentelor și a contextului `this`. De exemplu, dacă ai nevoie să folosești `this` pentru a face referire la elementul declanșator al evenimentului, ar trebui să folosești o funcție normală. Funcțiile săgeată sunt utile atunci când vrei să păstrezi valoarea lui `this` din contextul exterior, cum ar fi în cazul metodelor din clase.
+
+Dacă mai ai întrebări sau vrei exemple mai detaliate, spune-mi!

@@ -1,7 +1,3 @@
-Certainly! I'll modify the code to use `addEventListener` for attaching the click handler to both the CAPTCHA and the submit button. This is a good practice as it separates the JavaScript from the HTML, making the code more maintainable.
-
-
-
 ```html
 <!DOCTYPE html>
 <html lang="en">

@@ -109,34 +109,10 @@ Certainly! I'll modify the code to use `addEventListener` for attaching the clic
 
 ```
 
-Here are the key changes I've made to implement event listeners:
 
-1. Removed the `onclick` attribute from the CAPTCHA div:
-   ```html
-   <div id="captcha"></div>
-   ```
-
-2. Removed the `onclick` attribute from the submit button and added an id:
-   ```html
-   <button id="submitButton">Submit</button>
-   ```
-
-3. Added event listeners at the end of the script:
+1. Added event listeners at the end of the script:
    ```javascript
    document.getElementById('captcha').addEventListener('click', generateCaptcha);
    document.getElementById('submitButton').addEventListener('click', validateCaptcha);
    ```
-
-These changes accomplish the following:
-
-1. The code now uses `addEventListener` to attach event handlers, which is considered a best practice in modern JavaScript.
-2. It separates the JavaScript behavior from the HTML structure, improving code maintainability.
-3. It allows for easier addition of multiple event listeners if needed in the future.
-
-The functionality remains the same:
-- Clicking on the CAPTCHA text generates a new CAPTCHA.
-- Clicking the submit button validates the entered CAPTCHA.
-
 This approach is more flexible and adheres to the principle of separation of concerns, making the code easier to maintain and extend in the future.
-
-Would you like me to explain any part of this implementation further or make any additional modifications?

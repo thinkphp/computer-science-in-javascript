@@ -342,20 +342,13 @@ Students will work on a final project that incorporates the concepts learned thr
 
 #### References
 - https://web.stanford.edu/class/cs98si/slides/overview.html
-- 
 - https://learnxinyminutes.com/docs/javascript/
 - https://rtoal.github.io/ple/
 - https://www.learneroo.com/modules/64/nodes/350
-
-JavaScript: The Good Parts 
-
-* https://andersonguelphjs.github.io/OReilly_JavaScript_The_Good_Parts_May_2008.pdf
-
-W3Schools:
-* https://www.w3schools.com/js/default.asp
+- https://andersonguelphjs.github.io/OReilly_JavaScript_The_Good_Parts_May_2008.pdf
+- https://www.w3schools.com/js/default.asp
 
 What is Document Object Model(DOM) 
-
 * https://simplesnippets.tech/what-is-document-object-modeldom-how-js-interacts-with-dom/
 
 https://eloquentjavascript.net/

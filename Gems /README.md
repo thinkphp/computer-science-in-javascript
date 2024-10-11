@@ -18,9 +18,10 @@ Functions:
 
 https://www.w3schools.com/js/js_function_definition.asp
 
-#### Interview Questions
-https://github.com/codepo8/javascript-questions
-
 Arrays: 
 
 https://www.w3schools.com/js/js_arrays.asp
+
+#### Interview Questions
+https://github.com/codepo8/javascript-questions
+

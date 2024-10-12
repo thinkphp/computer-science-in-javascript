@@ -338,9 +338,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 Students will work on a final project that incorporates the concepts learned throughout the course. This could be a small web application or an interactive website that demonstrates their understanding of JavaScript fundamentals and modern development practices.
 
+# ______________________________
 
-
-#### References
+### References
 - https://web.stanford.edu/class/cs98si/slides/overview.html
 - https://learnxinyminutes.com/docs/javascript/
 - https://rtoal.github.io/ple/

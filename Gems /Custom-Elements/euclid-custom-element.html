@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCD Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Greatest Common Divisor Calculator</h1>
+        <euclid-gcd></euclid-gcd>
+    </div>
+
+    <script>
+        class EuclidGCD extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({ mode: 'open' });
+                this.shadowRoot.innerHTML = `
+                    <style>
+                        :host {
+                            display: block;
+                            font-family: Arial, sans-serif;
+                            padding: 20px;
+                            border: 1px solid #ccc;
+                            border-radius: 5px;
+                            background-color: white;
+                        }
+                        input, button {
+                            margin: 5px;
+                            padding: 5px;
+                        }
+                        button {
+                            background-color: #4CAF50;
+                            color: white;
+                            border: none;
+                            cursor: pointer;
+                        }
+                        button:hover {
+                            background-color: #45a049;
+                        }
+                        #result {
+                            margin-top: 10px;
+                            font-weight: bold;
+                        }
+                    </style>
+                    <input type="number" id="num1" placeholder="Enter first number">
+                    <input type="number" id="num2" placeholder="Enter second number">
+                    <button id="calculate">Calculate GCD</button>
+                    <div id="result"></div>
+                `;
+
+                this.calculateGCD = this.calculateGCD.bind(this);
+            }
+
+            connectedCallback() {
+                this.shadowRoot.getElementById('calculate').addEventListener('click', this.calculateGCD);
+            }
+
+            disconnectedCallback() {
+                this.shadowRoot.getElementById('calculate').removeEventListener('click', this.calculateGCD);
+            }
+
+            calculateGCD() {
+                const num1 = parseInt(this.shadowRoot.getElementById('num1').value);
+                const num2 = parseInt(this.shadowRoot.getElementById('num2').value);
+                
+                if (isNaN(num1) || isNaN(num2)) {
+                    this.shadowRoot.getElementById('result').textContent = 'Please enter valid numbers';
+                    return;
+                }
+
+                const gcd = this.gcd(Math.abs(num1), Math.abs(num2));
+                this.shadowRoot.getElementById('result').textContent = `The GCD of ${num1} and ${num2} is ${gcd}`;
+            }
+
+            gcd(a, b) {
+                return b === 0 ? a : this.gcd(b, a % b);
+            }
+        }
+
+        customElements.define('euclid-gcd', EuclidGCD);
+    </script>
+</body>
+</html>

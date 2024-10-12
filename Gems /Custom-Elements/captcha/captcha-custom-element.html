@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAPTCHA Form with Custom Element</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <captcha-element></captcha-element>
+
+    <script>
+        // Custom element definition goes here
+        class CaptchaElement extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({ mode: 'open' });
+                this.captchaText = '';
+            }
+
+            connectedCallback() {
+                this.render();
+                this.generateCaptcha();
+                this.addEventListeners();
+            }
+
+            render() {
+                this.shadowRoot.innerHTML = `
+                    <style>
+                        :host {
+                            display: block;
+                            font-family: Arial, sans-serif;
+                            background-color: white;
+                            padding: 20px;
+                            border-radius: 5px;
+                            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                        }
+                        #captcha {
+                            font-size: 24px;
+                            font-weight: bold;
+                            color: #333;
+                            background-color: #e0e0e0;
+                            padding: 10px;
+                            border-radius: 5px;
+                            letter-spacing: 5px;
+                            margin-bottom: 10px;
+                            cursor: pointer;
+                            user-select: none;
+                            transition: background-color 0.3s;
+                        }
+                        #captcha:hover {
+                            background-color: #d0d0d0;
+                        }
+                        input, button {
+                            display: block;
+                            width: 100%;
+                            padding: 10px;
+                            margin-bottom: 10px;
+                            box-sizing: border-box;
+                        }
+                        button {
+                            background-color: #007bff;
+                            color: white;
+                            border: none;
+                            cursor: pointer;
+                        }
+                        button:hover {
+                            background-color: #0056b3;
+                        }
+                        .info {
+                            font-size: 12px;
+                            color: #666;
+                            text-align: center;
+                            margin-top: 10px;
+                        }
+                    </style>
+                    <div id="captcha"></div>
+                    <div class="info">Click on the CAPTCHA to generate a new one</div>
+                    <input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
+                    <button id="submitButton">Submit</button>
+                `;
+            }
+
+            generateCaptcha() {
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                this.captchaText = '';
+                for (let i = 0; i < 6; i++) {
+                    this.captchaText += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                this.shadowRoot.getElementById('captcha').innerText = this.captchaText;
+            }
+
+            validateCaptcha() {
+                const input = this.shadowRoot.getElementById('captchaInput').value;
+                if (input === this.captchaText) {
+                    alert('CAPTCHA validated successfully!');
+                    this.generateCaptcha();
+                } else {
+                    alert('CAPTCHA validation failed. Please try again.');
+                    this.generateCaptcha();
+                }
+                this.shadowRoot.getElementById('captchaInput').value = '';
+            }
+
+            addEventListeners() {
+                this.shadowRoot.getElementById('captcha').addEventListener('click', () => this.generateCaptcha());
+                this.shadowRoot.getElementById('submitButton').addEventListener('click', () => this.validateCaptcha());
+            }
+        }
+
+        customElements.define('captcha-element', CaptchaElement);
+    </script>
+</body>
+</html>

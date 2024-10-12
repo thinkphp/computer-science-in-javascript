@@ -1,10 +1,6 @@
 
 # Gems:
 
-#### Interview Questions
-https://github.com/codepo8/javascript-questions
-
-
 * Hamburger > https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_mobile_navbar
 * Filter > https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_portfolio_gallery_filter
 
@@ -25,3 +21,6 @@ https://www.w3schools.com/js/js_function_definition.asp
 ### Arrays: 
 
 https://www.w3schools.com/js/js_arrays.asp
+
+### Interview Questions
+https://github.com/codepo8/javascript-questions

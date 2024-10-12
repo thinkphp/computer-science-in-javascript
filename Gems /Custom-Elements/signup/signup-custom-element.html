@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Custom Element</title>
+    <style>
+        signup-form {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            display: block;
+        }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input[type="text"], input[type="email"], input[type="password"] { width: 100%; padding: 8px; }
+        .error { color: red; font-size: 0.9em; }
+        #captchaCanvas { border: 1px solid #ddd; margin-bottom: 10px; }
+        button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <signup-form></signup-form>
+
+    <script>
+        class SignupForm extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({ mode: 'open' });
+            }
+
+            connectedCallback() {
+                this.render();
+                this.setupEventListeners();
+                this.generateCaptcha();
+            }
+
+            render() {
+                this.shadowRoot.innerHTML = `
+                    <style>
+                        :host {
+                            font-family: Arial, sans-serif;
+                            max-width: 400px;
+                            margin: 0 auto;
+                            padding: 20px;
+                            display: block;
+                        }
+                        .form-group { margin-bottom: 15px; }
+                        label { display: block; margin-bottom: 5px; }
+                        input[type="text"], input[type="email"], input[type="password"] { width: 100%; padding: 8px; }
+                        .error { color: red; font-size: 0.9em; }
+                        #captchaCanvas { border: 1px solid #ddd; margin-bottom: 10px; }
+                        button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; cursor: pointer; }
+                        button:hover { background-color: #0056b3; }
+                    </style>
+                    <form id="signupForm">
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input type="text" id="username" name="username" required>
+                            <span id="usernameError" class="error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required>
+                            <span id="emailError" class="error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" name="password" required>
+                            <span id="passwordError" class="error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password:</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required>
+                            <span id="confirmPasswordError" class="error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>CAPTCHA:</label>
+                            <canvas id="captchaCanvas" width="200" height="50"></canvas>
+                            <input type="text" id="captchaInput" name="captcha" required>
+                            <span id="captchaError" class="error"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                            <label for="agreeTerms">I agree to the terms and conditions</label>
+                            <span id="agreeTermsError" class="error"></span>
+                        </div>
+                        <button type="submit">Sign Up</button>
+                    </form>
+                `;
+            }
+
+            setupEventListeners() {
+                const form = this.shadowRoot.getElementById('signupForm');
+                form.addEventListener('submit', this.handleSubmit.bind(this));
+            }
+
+            generateCaptcha() {
+                const canvas = this.shadowRoot.getElementById('captchaCanvas');
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.font = '30px Arial';
+                ctx.fillStyle = '#333';
+                this.captchaText = Math.random().toString(36).substring(2, 8).toUpperCase();
+                ctx.fillText(this.captchaText, 40, 40);
+            }
+
+            handleSubmit(e) {
+                e.preventDefault();
+                let isValid = true;
+
+                // Username validation
+                const username = this.shadowRoot.getElementById('username').value;
+                if (username.length < 3) {
+                    this.shadowRoot.getElementById('usernameError').textContent = 'Username must be at least 3 characters long';
+                    isValid = false;
+                } else {
+                    this.shadowRoot.getElementById('usernameError').textContent = '';
+                }
+
+                // Email validation
+                const email = this.shadowRoot.getElementById('email').value;
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    this.shadowRoot.getElementById('emailError').textContent = 'Please enter a valid email address';
+                    isValid = false;
+                } else {
+                    this.shadowRoot.getElementById('emailError').textContent = '';
+                }
+
+                // Password validation
+                const password = this.shadowRoot.getElementById('password').value;
+                if (password.length < 8) {
+                    this.shadowRoot.getElementById('passwordError').textContent = 'Password must be at least 8 characters long';
+                    isValid = false;
+                } else {
+                    this.shadowRoot.getElementById('passwordError').textContent = '';
+                }
+
+                // Confirm password validation
+                const confirmPassword = this.shadowRoot.getElementById('confirmPassword').value;
+                if (password !== confirmPassword) {
+                    this.shadowRoot.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+                    isValid = false;
+                } else {
+                    this.shadowRoot.getElementById('confirmPasswordError').textContent = '';
+                }
+
+                // CAPTCHA validation
+                const captchaInput = this.shadowRoot.getElementById('captchaInput').value.toUpperCase();
+                if (captchaInput !== this.captchaText) {
+                    this.shadowRoot.getElementById('captchaError').textContent = 'CAPTCHA is incorrect';
+                    isValid = false;
+                    this.generateCaptcha(); // Generate new CAPTCHA if incorrect
+                } else {
+                    this.shadowRoot.getElementById('captchaError').textContent = '';
+                }
+
+                // Terms and conditions agreement validation
+                const agreeTerms = this.shadowRoot.getElementById('agreeTerms').checked;
+                if (!agreeTerms) {
+                    this.shadowRoot.getElementById('agreeTermsError').textContent = 'You must agree to the terms and conditions';
+                    isValid = false;
+                } else {
+                    this.shadowRoot.getElementById('agreeTermsError').textContent = '';
+                }
+
+                if (isValid) {
+                    alert('Form submitted successfully!');
+                    // Here you would typically send the form data to your server
+                }
+            }
+        }
+
+        customElements.define('signup-form', SignupForm);
+    </script>
+</body>
+</html>

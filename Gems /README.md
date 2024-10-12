@@ -9,6 +9,7 @@ https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_portfolio_gallery_f
 
 ### DOM 
 https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById
+
 https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByClassName
 
 ### The typeof Operator 

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Improved Signup Form</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 400px; margin: 0 auto; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input[type="text"], input[type="email"], input[type="password"] { width: 100%; padding: 8px; }
+        .error { color: red; font-size: 0.9em; }
+        #captchaCanvas { border: 1px solid #ddd; margin-bottom: 10px; }
+        button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <form id="signupForm">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <span id="usernameError" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <span id="emailError" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <span id="passwordError" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+            <span id="confirmPasswordError" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label for="captchaInput">CAPTCHA:</label>
+            <canvas id="captchaCanvas" width="200" height="50"></canvas>
+            <input type="text" id="captchaInput" name="captcha" required>
+            <span id="captchaError" class="error"></span>
+        </div>
+        <div class="form-group">
+            <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+            <label for="agreeTerms">I agree to the terms and conditions</label>
+            <span id="agreeTermsError" class="error"></span>
+        </div>
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <script>
+        let captchaText = '';
+
+        function generateCaptcha() {
+            const canvas = document.getElementById('captchaCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.font = '30px Arial';
+            ctx.fillStyle = '#333';
+            captchaText = Math.random().toString(36).substring(2, 8).toUpperCase();
+            ctx.fillText(captchaText, 40, 40);
+        }
+
+        function validateForm(e) {
+            e.preventDefault();
+            let isValid = true;
+
+            // Username validation
+            const username = document.getElementById('username').value;
+            if (username.length < 3) {
+                document.getElementById('usernameError').textContent = 'Username must be at least 3 characters long';
+                isValid = false;
+            } else {
+                document.getElementById('usernameError').textContent = '';
+            }
+
+            // Email validation
+            const email = document.getElementById('email').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email address';
+                isValid = false;
+            } else {
+                document.getElementById('emailError').textContent = '';
+            }
+
+            // Password validation
+            const password = document.getElementById('password').value;
+            if (password.length < 8) {
+                document.getElementById('passwordError').textContent = 'Password must be at least 8 characters long';
+                isValid = false;
+            } else {
+                document.getElementById('passwordError').textContent = '';
+            }
+
+            // Confirm password validation
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+                isValid = false;
+            } else {
+                document.getElementById('confirmPasswordError').textContent = '';
+            }
+
+            // CAPTCHA validation
+            const captchaInput = document.getElementById('captchaInput').value.toUpperCase();
+            if (captchaInput !== captchaText) {
+                document.getElementById('captchaError').textContent = 'CAPTCHA is incorrect';
+                isValid = false;
+                generateCaptcha(); // Generate new CAPTCHA if incorrect
+            } else {
+                document.getElementById('captchaError').textContent = '';
+            }
+
+            // Terms and conditions agreement validation
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            if (!agreeTerms) {
+                document.getElementById('agreeTermsError').textContent = 'You must agree to the terms and conditions';
+                isValid = false;
+            } else {
+                document.getElementById('agreeTermsError').textContent = '';
+            }
+
+            if (isValid) {
+                alert('Form submitted successfully!');
+                // Here you would typically send the form data to your server
+            }
+        }
+
+        // Initialize the form
+        document.addEventListener('DOMContentLoaded', () => {
+            generateCaptcha();
+            document.getElementById('signupForm').addEventListener('submit', validateForm);
+        });
+    </script>
+</body>
+</html>

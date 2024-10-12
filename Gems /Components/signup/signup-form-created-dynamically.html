@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Form</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 400px; margin: 0 auto; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input[type="text"], input[type="email"], input[type="password"] { width: 100%; padding: 8px; }
+        .error { color: red; font-size: 0.9em; }
+        #captchaCanvas { border: 1px solid #ddd; margin-bottom: 10px; }
+        button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <div id="signupFormContainer"></div>
+
+    <script>
+        function createSignupForm() {
+            const form = document.createElement('form');
+            form.id = 'signupForm';
+
+            const fields = [
+                { id: 'username', type: 'text', label: 'Username:' },
+                { id: 'email', type: 'email', label: 'Email:' },
+                { id: 'password', type: 'password', label: 'Password:' },
+                { id: 'confirmPassword', type: 'password', label: 'Confirm Password:' }
+            ];
+
+            fields.forEach(field => {
+                const formGroup = document.createElement('div');
+                formGroup.className = 'form-group';
+
+                const label = document.createElement('label');
+                label.htmlFor = field.id;
+                label.textContent = field.label;
+
+                const input = document.createElement('input');
+                input.type = field.type;
+                input.id = field.id;
+                input.name = field.id;
+                input.required = true;
+
+                const error = document.createElement('span');
+                error.id = `${field.id}Error`;
+                error.className = 'error';
+
+                formGroup.appendChild(label);
+                formGroup.appendChild(input);
+                formGroup.appendChild(error);
+                form.appendChild(formGroup);
+            });
+
+            // CAPTCHA
+            const captchaGroup = document.createElement('div');
+            captchaGroup.className = 'form-group';
+
+            const captchaLabel = document.createElement('label');
+            captchaLabel.textContent = 'CAPTCHA:';
+
+            const captchaCanvas = document.createElement('canvas');
+            captchaCanvas.id = 'captchaCanvas';
+            captchaCanvas.width = 200;
+            captchaCanvas.height = 50;
+
+            const captchaInput = document.createElement('input');
+            captchaInput.type = 'text';
+            captchaInput.id = 'captchaInput';
+            captchaInput.name = 'captcha';
+            captchaInput.required = true;
+
+            const captchaError = document.createElement('span');
+            captchaError.id = 'captchaError';
+            captchaError.className = 'error';
+
+            captchaGroup.appendChild(captchaLabel);
+            captchaGroup.appendChild(captchaCanvas);
+            captchaGroup.appendChild(captchaInput);
+            captchaGroup.appendChild(captchaError);
+            form.appendChild(captchaGroup);
+
+            // Terms and Conditions
+            const termsGroup = document.createElement('div');
+            termsGroup.className = 'form-group';
+
+            const termsCheckbox = document.createElement('input');
+            termsCheckbox.type = 'checkbox';
+            termsCheckbox.id = 'agreeTerms';
+            termsCheckbox.name = 'agreeTerms';
+            termsCheckbox.required = true;
+
+            const termsLabel = document.createElement('label');
+            termsLabel.htmlFor = 'agreeTerms';
+            termsLabel.textContent = 'I agree to the terms and conditions';
+
+            const termsError = document.createElement('span');
+            termsError.id = 'agreeTermsError';
+            termsError.className = 'error';
+
+            termsGroup.appendChild(termsCheckbox);
+            termsGroup.appendChild(termsLabel);
+            termsGroup.appendChild(termsError);
+            form.appendChild(termsGroup);
+
+            // Submit button
+            const submitButton = document.createElement('button');
+            submitButton.type = 'submit';
+            submitButton.textContent = 'Sign Up';
+            form.appendChild(submitButton);
+
+            return form;
+        }
+
+        function generateCaptcha() {
+            const canvas = document.getElementById('captchaCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.font = '30px Arial';
+            ctx.fillStyle = '#333';
+            const captchaText = Math.random().toString(36).substring(2, 8).toUpperCase();
+            ctx.fillText(captchaText, 40, 40);
+            return captchaText;
+        }
+
+        function validateForm(e) {
+            e.preventDefault();
+            let isValid = true;
+
+            // Username validation
+            const username = document.getElementById('username').value;
+            if (username.length < 3) {
+                document.getElementById('usernameError').textContent = 'Username must be at least 3 characters long';
+                isValid = false;
+            } else {
+                document.getElementById('usernameError').textContent = '';
+            }
+
+            // Email validation
+            const email = document.getElementById('email').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email address';
+                isValid = false;
+            } else {
+                document.getElementById('emailError').textContent = '';
+            }
+
+            // Password validation
+            const password = document.getElementById('password').value;
+            if (password.length < 8) {
+                document.getElementById('passwordError').textContent = 'Password must be at least 8 characters long';
+                isValid = false;
+            } else {
+                document.getElementById('passwordError').textContent = '';
+            }
+
+            // Confirm password validation
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+                isValid = false;
+            } else {
+                document.getElementById('confirmPasswordError').textContent = '';
+            }
+
+            // CAPTCHA validation
+            const captchaInput = document.getElementById('captchaInput').value.toUpperCase();
+            if (captchaInput !== captchaText) {
+                document.getElementById('captchaError').textContent = 'CAPTCHA is incorrect';
+                isValid = false;
+                captchaText = generateCaptcha(); // Generate new CAPTCHA if incorrect
+            } else {
+                document.getElementById('captchaError').textContent = '';
+            }
+
+            // Terms and conditions agreement validation
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            if (!agreeTerms) {
+                document.getElementById('agreeTermsError').textContent = 'You must agree to the terms and conditions';
+                isValid = false;
+            } else {
+                document.getElementById('agreeTermsError').textContent = '';
+            }
+
+            if (isValid) {
+                alert('Form submitted successfully!');
+                // Here you would typically send the form data to your server
+            }
+        }
+
+        // Initialize the form
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('signupFormContainer');
+            const form = createSignupForm();
+            container.appendChild(form);
+
+            captchaText = generateCaptcha();
+            form.addEventListener('submit', validateForm);
+        });
+    </script>
+</body>
+</html>

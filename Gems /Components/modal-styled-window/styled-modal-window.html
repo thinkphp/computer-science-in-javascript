@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Modal Window Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #openModal {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        #openModal:hover {
+            background-color: #45a049;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            width: 90%;
+            max-width: 500px;
+            animation: slideDown 0.3s;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .phone {
+            font-size: 24px;
+            color: #4CAF50;
+            margin: 20px 0;
+        }
+
+        .description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .modal-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .modal-button:active {
+            transform: scale(0.98);
+        }
+
+        .primary-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .primary-button:hover {
+            background-color: #45a049;
+        }
+
+        .secondary-button {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .secondary-button:hover {
+            background-color: #da190b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Styled Modal Window Example</h1>
+    <button id="openModal">Open Modal</button>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Fresh Fruits</h2>
+            <div class="phone">Fructe</div>
+            <p class="description">Have questions or need assistance? Our customer support team is here to help. Feel free to call us or use the buttons below to get in touch.</p>
+            <div class="button-container">
+                <button class="modal-button primary-button" id="callNow">Buy now</button>
+                <button class="modal-button secondary-button" id="sendEmail">Add To Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById("myModal");
+        const btn = document.getElementById("openModal");
+        const span = document.getElementsByClassName("close")[0];
+        const callNowBtn = document.getElementById("callNow");
+        const sendEmailBtn = document.getElementById("sendEmail");
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        callNowBtn.onclick = function() {
+            alert("Calling (555) 123-4567...");
+            // In a real application, you might initiate a call here
+        }
+
+        sendEmailBtn.onclick = function() {
+            alert("Opening email client...");
+            // In a real application, you might open the default email client here
+        }
+    </script>
+</body>
+</html>

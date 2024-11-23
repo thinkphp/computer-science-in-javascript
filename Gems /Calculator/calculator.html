@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .calculator {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      padding: 20px;
+    }
+
+    .display {
+      background-color: #222;
+      color: white;
+      font-size: 2em;
+      text-align: right;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .btn {
+      background-color: #ddd;
+      border: none;
+      padding: 20px;
+      font-size: 1.5em;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="display" id="display">0</div>
+    <div class="buttons">
+      <button class="btn" onclick="appendCharacter('1')">1</button>
+      <button class="btn" onclick="appendCharacter('2')">2</button>
+      <button class="btn" onclick="appendCharacter('3')">3</button>
+      <button class="btn" onclick="appendCharacter('+')">+</button>
+      <button class="btn" onclick="appendCharacter('4')">4</button>
+      <button class="btn" onclick="appendCharacter('5')">5</button>
+      <button class="btn" onclick="appendCharacter('6')">6</button>
+      <button class="btn" onclick="appendCharacter('-')">-</button>
+      <button class="btn" onclick="appendCharacter('7')">7</button>
+      <button class="btn" onclick="appendCharacter('8')">8</button>
+      <button class="btn" onclick="appendCharacter('9')">9</button>
+      <button class="btn" onclick="appendCharacter('*')">*</button>
+      <button class="btn" onclick="appendCharacter('0')">0</button>
+      <button class="btn" onclick="appendCharacter('.')">.</button>
+      <button class="btn" onclick="compute()">=</button>
+      <button class="btn" onclick="appendCharacter('/')">/</button>
+      <button class="btn" onclick="clearDisplay()">C</button>
+    </div>
+  </div>
+  <script>
+    let display = document.getElementById('display');
+    let currentInput = '';
+
+    function appendCharacter(character) {
+      currentInput += character.toString();
+      updateDisplay();
+    }
+
+    function compute() {
+      try {
+        currentInput = eval(currentInput).toString();
+      } catch (e) {
+        currentInput = 'Error';
+      }
+      updateDisplay();
+    }
+
+    function clearDisplay() {
+      currentInput = '';
+      updateDisplay();
+    }
+
+    function updateDisplay() {
+      display.innerText = currentInput || '0';
+    }
+  </script>
+</body>
+</html>

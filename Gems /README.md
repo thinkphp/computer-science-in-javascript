@@ -4,9 +4,6 @@
 ###  Hamburger
 https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_mobile_navbar
 
-### Filter 
-https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_portfolio_gallery_filter
-
 ### DOM 
 https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById
 

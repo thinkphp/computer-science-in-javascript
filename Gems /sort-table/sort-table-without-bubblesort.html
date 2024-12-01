@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 800px;
+      margin: 20px auto;
+      font-family: Arial, sans-serif;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 15px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #4a90e2;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+    }
+
+    th:hover {
+      background-color: #357abd;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+
+    tr:hover {
+      background-color: #f2f2f2;
+    }
+
+    .sort-arrow {
+      display: inline-block;
+      width: 0;
+      height: 0;
+      margin-left: 5px;
+      vertical-align: middle;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+    }
+
+    .sort-arrow.asc {
+      border-bottom: 4px solid white;
+    }
+
+    .sort-arrow.desc {
+      border-top: 4px solid white;
+    }
+
+    .price {
+      color: #2ecc71;
+      font-weight: bold;
+    }
+
+    .speed {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <table id="carTable">
+    <thead>
+      <tr>
+        <th onclick="sortTable(0)">Car Name <span class="sort-arrow"></span></th>
+        <th onclick="sortTable(1)">Speed (mph) <span class="sort-arrow"></span></th>
+        <th onclick="sortTable(2)">Price ($) <span class="sort-arrow"></span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Tesla Model S</td>
+        <td class="speed">200</td>
+        <td class="price">94,990</td>
+      </tr>
+      <tr>
+        <td>Ferrari F8</td>
+        <td class="speed">211</td>
+        <td class="price">276,550</td>
+      </tr>
+      <tr>
+        <td>Toyota Camry</td>
+        <td class="speed">135</td>
+        <td class="price">26,420</td>
+      </tr>
+      <tr>
+        <td>Porsche 911</td>
+        <td class="speed">182</td>
+        <td class="price">106,100</td>
+      </tr>
+      <tr>
+        <td>BMW M3</td>
+        <td class="speed">180</td>
+        <td class="price">72,800</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    let sortDirections = {
+      0: true,  // true for ascending
+      1: true,
+      2: true
+    };
+
+    function sortTable(columnIndex) {
+      const table = document.getElementById("carTable");
+      const tbody = table.getElementsByTagName("tbody")[0];
+      const rows = Array.from(tbody.getElementsByTagName("tr"));
+      const headers = table.getElementsByTagName("th");
+
+      // Reset all arrows
+      document.querySelectorAll('.sort-arrow').forEach(arrow => {
+        arrow.className = 'sort-arrow';
+      });
+
+      // Set current arrow
+      const currentArrow = headers[columnIndex].querySelector('.sort-arrow');
+      currentArrow.className = 'sort-arrow ' + (sortDirections[columnIndex] ? 'asc' : 'desc');
+
+      // Sort the rows
+      rows.sort((a, b) => {
+        let valueA = a.cells[columnIndex].textContent;
+        let valueB = b.cells[columnIndex].textContent;
+
+        // Handle different column types
+        if (columnIndex === 0) {
+          // String comparison for car names
+          return sortDirections[columnIndex]
+            ? valueA.localeCompare(valueB)
+            : valueB.localeCompare(valueA);
+        } else {
+          // Numeric comparison for speed and price
+          // Remove currency symbols and commas
+          valueA = parseFloat(valueA.replace(/[$,]/g, ''));
+          valueB = parseFloat(valueB.replace(/[$,]/g, ''));
+
+          return sortDirections[columnIndex]
+            ? valueA - valueB
+            : valueB - valueA;
+        }
+      });
+
+      // Clear and re-add sorted rows
+      tbody.innerHTML = '';
+      rows.forEach(row => tbody.appendChild(row));
+
+      // Reverse sort direction for next click
+      sortDirections[columnIndex] = !sortDirections[columnIndex];
+    }
+  </script>
+</body>
+</html>

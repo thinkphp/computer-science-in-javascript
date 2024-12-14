@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Movable Search Bar</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            height: 200vh; /* For scroll effect */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Header styling */
+        header {
+            width: 100%;
+            background-color: #3498db;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Search bar container */
+        .search-container {
+            position: relative;
+            width: 100%;
+            text-align: center;
+            margin-top: 50px;
+            transition: top 0.5s ease, background-color 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .search-bar {
+            width: 300px;
+            padding: 15px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .search-bar:focus {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Fixed search bar styling */
+        .search-container.moved {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            padding: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .search-container.moved .search-bar {
+            width: 50%;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        My Awesome Website
+    </header>
+
+    <!-- Search Container -->
+    <div class="search-container">
+        <input type="text" id="searchBar" class="search-bar" placeholder="Search...">
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 My Awesome Website. All rights reserved.
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBar = document.getElementById('searchBar');
+            const searchContainer = document.querySelector('.search-container');
+            
+            searchBar.addEventListener('click', function() {
+                // Toggle the "moved" class to move the search bar to the top
+                searchContainer.classList.toggle('moved');
+            });
+        });
+    </script>
+</body>
+</html>
+

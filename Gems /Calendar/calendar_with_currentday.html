@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .calendar-container {
+      max-width: 800px;
+      margin: 20px auto;
+      font-family: Arial, sans-serif;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background: #1a365d;
+      color: white;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .month-year {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .nav-button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+
+    .weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      background: #2c5282;
+      color: white;
+      padding: 10px 0;
+    }
+
+    .weekdays div {
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 1px;
+      background: #e2e8f0;
+      padding: 1px;
+    }
+
+    .day {
+      min-height: 100px;
+      background: white;
+      padding: 5px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .day:hover {
+      background: #f7fafc;
+    }
+
+    .day.inactive {
+      background: #f7fafc;
+      color: #a0aec0;
+    }
+
+    .day.current-day {
+      background-color: #ffff99; /* Light yellow background */
+      border: 2px solid #ffd700; /* Golden border for emphasis */
+    }
+
+    .date-number {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .event {
+      background: #4299e1;
+      color: white;
+      padding: 2px 4px;
+      border-radius: 3px;
+      margin: 2px 0;
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background: white;
+      padding: 20px;
+      width: 300px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 8px;
+    }
+
+    .modal input {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+    }
+
+    .modal button {
+      background: #4299e1;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .modal button.cancel {
+      background: #e53e3e;
+    }
+  </style>
+</head>
+<body>
+  <div class="calendar-container">
+    <div class="header">
+      <button class="nav-button" onclick="previousMonth()">←</button>
+      <div class="month-year" id="monthYear"></div>
+      <button class="nav-button" onclick="nextMonth()">→</button>
+    </div>
+    <div class="weekdays">
+      <div>Sun</div>
+      <div>Mon</div>
+      <div>Tue</div>
+      <div>Wed</div>
+      <div>Thu</div>
+      <div>Fri</div>
+      <div>Sat</div>
+    </div>
+    <div class="days" id="daysContainer"></div>
+  </div>
+
+  <div class="modal" id="eventModal">
+    <div class="modal-content">
+      <h3>Add Event</h3>
+      <input type="text" id="eventTitle" placeholder="Event Title">
+      <input type="time" id="eventTime">
+      <button onclick="saveEvent()">Save</button>
+      <button class="cancel" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    let currentDate = new Date();
+    let selectedDate = null;
+    let events = {};
+
+    function initCalendar() {
+      showCalendar(currentDate);
+    }
+
+    function showCalendar(date) {
+      const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+      const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+      const startDay = firstDay.getDay();
+      const totalDays = lastDay.getDate();
+
+      document.getElementById('monthYear').textContent =
+        date.toLocaleString('default', { month: 'long', year: 'numeric' });
+
+      const daysContainer = document.getElementById('daysContainer');
+      daysContainer.innerHTML = '';
+
+      // Current day for comparison
+      const today = new Date();
+
+      // Previous month's days
+      const prevMonthLastDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
+      for (let i = startDay - 1; i >= 0; i--) {
+        const dayDiv = createDayElement(prevMonthLastDay - i, true);
+        daysContainer.appendChild(dayDiv);
+      }
+
+      // Current month's days
+      for (let i = 1; i <= totalDays; i++) {
+        const dayDiv = createDayElement(i, false);
+        const currentDay = new Date(date.getFullYear(), date.getMonth(), i);
+
+        // Check if this is today
+        if (currentDay.toDateString() === today.toDateString()) {
+          dayDiv.classList.add('current-day');
+        }
+
+        const dateStr = formatDate(currentDay);
+        if (events[dateStr]) {
+          events[dateStr].forEach(event => {
+            const eventDiv = document.createElement('div');
+            eventDiv.className = 'event';
+            eventDiv.textContent = `${event.time} ${event.title}`;
+            dayDiv.appendChild(eventDiv);
+          });
+        }
+        daysContainer.appendChild(dayDiv);
+      }
+
+      // Next month's days
+      const remainingDays = 42 - (startDay + totalDays);
+      for (let i = 1; i <= remainingDays; i++) {
+        const dayDiv = createDayElement(i, true);
+        daysContainer.appendChild(dayDiv);
+      }
+    }
+
+    function createDayElement(day, inactive) {
+      const dayDiv = document.createElement('div');
+      dayDiv.className = `day${inactive ? ' inactive' : ''}`;
+
+      const dateNumber = document.createElement('div');
+      dateNumber.className = 'date-number';
+      dateNumber.textContent = day;
+      dayDiv.appendChild(dateNumber);
+
+      if (!inactive) {
+        dayDiv.onclick = () => openModal(new Date(currentDate.getFullYear(), currentDate.getMonth(), day));
+      }
+
+      return dayDiv;
+    }
+
+    function previousMonth() {
+      currentDate.setMonth(currentDate.getMonth() - 1);
+      showCalendar(currentDate);
+    }
+
+    function nextMonth() {
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      showCalendar(currentDate);
+    }
+
+    function formatDate(date) {
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    }
+
+    function openModal(date) {
+      selectedDate = date;
+      document.getElementById('eventModal').style.display = 'block';
+      document.getElementById('eventTitle').value = '';
+      document.getElementById('eventTime').value = '';
+    }
+
+    function closeModal() {
+      document.getElementById('eventModal').style.display = 'none';
+    }
+
+    function saveEvent() {
+      const title = document.getElementById('eventTitle').value.trim();
+      const time = document.getElementById('eventTime').value;
+
+      if (!title) {
+        alert('Please enter an event title');
+        return;
+      }
+
+      const dateStr = formatDate(selectedDate);
+      if (!events[dateStr]) {
+        events[dateStr] = [];
+      }
+
+      events[dateStr].push({
+        title: title,
+        time: time
+      });
+
+      closeModal();
+      showCalendar(currentDate);
+    }
+
+    // Initialize calendar
+    initCalendar();
+  </script>
+</body>
+</html>

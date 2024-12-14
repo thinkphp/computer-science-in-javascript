@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <style media="screen">
+
+      .box {
+
+        width: 100px;
+        height: 100px;
+
+        background-color: lightblue;
+        position: relative;
+
+        transition: transform 0.5s ease;//miscare
+
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <div class="box" id="box"></div>
+
+   <button type="button" name="button" onclick="moveRight()">right</button>
+   <button type="button" name="button" onclick="moveLeft()">left</button>
+
+<script type="text/javascript">
+
+  let pozitie_curenta = 0;//initializam cu 0
+
+  // nume_variabila = valori
+  let imageWidth = 100//latime imaginii
+
+  //document.getElementById("box").style.transform = `translateX(${100}px)`
+
+  function moveRight() {
+
+      pozitie_curenta = pozitie_curenta + imageWidth;
+      //pozitie_curenta += imageWidth
+
+      //dam click pe butonul right atunci variabila translateXValue isi va modifica valoarea
+      //translateXValue = 0 + 100 = 100 (cand dam click pe right o sa se deplaseze la dreapta cu 100 de pixeli)
+      //translateXValue = 100 + 100  (cand dam click pe right a doua oara  o sa se deplaseze la dreapta cu 100 de pixeli)
+      //                  valoarea veche + valoarea noua  = 200
+
+
+      document.getElementById("box").style.transform = `translateX(${pozitie_curenta}px)`
+  }
+
+  function moveLeft() { //butonul de next
+     pozitie_curenta -= imageWidth;//200 - 100 = 100
+    //translateXValue = translateXValue - imageWidth = -100 - 100 = -200
+
+    //dam click pe butonul left atunci variabila translateXValue isi va modifica valoarea
+    //translateXValue = 0 - 100 = -100 (cand dam click pe left o sa se deplaseze la stanga cu -100) = -100
+
+    //translateXValue = -100 -100 (cand dam click pe left o sa se deplaseze la stanga cu -100) = -100
+
+
+    document.getElementById("box").style.transform = `translateX(${pozitie_curenta}px)`
+
+  }
+
+</script>
+
+  </body>
+
+
+</html>

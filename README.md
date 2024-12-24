@@ -1,7 +1,5 @@
 # Computer Science in JavaScript
 
-## Stanford University
-
 ### Course Overview
 This course introduces students to the fundamentals of JavaScript programming, covering core concepts and practical applications. By the end of this course, students will have a solid foundation in JavaScript and web development principles.
 

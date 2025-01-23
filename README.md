@@ -371,6 +371,7 @@ TypeScript - a superset of JS
 
  ### Interview Questions
  - https://github.com/codepo8/javascript-questions
+ - https://github.com/yangshun/top-javascript-interview-questions
 
 -  https://www.geeksforgeeks.org/javascript-interview-questions-and-answers/?ref=shm
 

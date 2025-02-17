@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        :root {
+            /* Light mode variables */
+            --background-color: #ffffff;
+            --text-color: #333333;
+            --secondary-bg: #f0f0f0;
+            --border-color: #dddddd;
+            --link-color: #0066cc;
+            --switch-bg: #e2e2e2;
+            --switch-circle: #ffffff;
+        }
+
+        /* Dark mode variables */
+        [data-theme="dark"] {
+            --background-color: #1a1a1a;
+            --text-color: #ffffff;
+            --secondary-bg: #2d2d2d;
+            --border-color: #404040;
+            --link-color: #66b3ff;
+            --switch-bg: #365acc;
+            --switch-circle: #ffffff;
+        }
+
+        /* Apply variables to elements */
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        /* Toggle switch container */
+        .theme-switch-wrapper {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 999;
+        }
+
+        /* Switch label */
+        .theme-switch {
+            display: inline-block;
+            height: 34px;
+            position: relative;
+            width: 60px;
+        }
+
+        /* Hide default HTML checkbox */
+        .theme-switch input {
+            display: none;
+        }
+
+        /* The slider */
+        .slider {
+            background-color: var(--switch-bg);
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            background-color: var(--switch-circle);
+            bottom: 4px;
+            content: "";
+            height: 26px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 26px;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--switch-bg);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Icons */
+        .slider:after {
+            content: "☀️";
+            position: absolute;
+            left: 8px;
+            top: 8px;
+            font-size: 16px;
+        }
+
+        input:checked + .slider:after {
+            content: "🌙";
+            left: 35px;
+        }
+
+        /* Rest of your styles remain the same */
+        .card {
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            margin: 10px;
+        }
+
+        a {
+            color: var(--link-color);
+        }
+    </style>
+
+    <script>
+        // Check for saved theme preference or default to system preference
+        function getInitialTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                return savedTheme;
+            }
+            
+            // Check system preference
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            
+            return 'light';
+        }
+
+        // Function to set theme
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            
+            // Update checkbox state
+            const checkbox = document.getElementById('theme-switch');
+            if (checkbox) {
+                checkbox.checked = theme === 'dark';
+            }
+        }
+
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const initialTheme = getInitialTheme();
+            
+            // Create and add the switch if it doesn't exist
+            if (!document.querySelector('.theme-switch-wrapper')) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'theme-switch-wrapper';
+                
+                wrapper.innerHTML = `
+                    <label class="theme-switch">
+                        <input type="checkbox" id="theme-switch">
+                        <span class="slider"></span>
+                    </label>
+                `;
+                
+                document.body.appendChild(wrapper);
+                
+                // Add event listener to checkbox
+                document.getElementById('theme-switch').addEventListener('change', function(e) {
+                    setTheme(e.target.checked ? 'dark' : 'light');
+                });
+            }
+            
+            setTheme(initialTheme);
+        });
+
+        // Listen for system theme changes
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                const newTheme = e.matches ? 'dark' : 'light';
+                setTheme(newTheme);
+            });
+        }
+    </script>
+</head>
+<body>
+    <!-- Example content to demonstrate dark mode -->
+    <div class="card">
+        <h1>Dark Mode Example</h1>
+        <p>This is some sample content to demonstrate the dark mode functionality.</p>
+        <a href="#">Sample Link</a>
+    </div>
+</body>
+</html>

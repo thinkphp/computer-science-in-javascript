@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .container {
+      display: flex;
+      justify-content: space-around;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+
+    .draggable-items, .drop-zone {
+      padding: 20px;
+      border-radius: 8px;
+      background: #f5f5f5;
+      min-width: 200px;
+      min-height: 300px;
+    }
+
+    .draggable {
+      padding: 15px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin: 10px 0;
+      cursor: move;
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .draggable:hover {
+      background: #f8f8f8;
+      transform: translateY(-2px);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .draggable.dragging {
+      opacity: 0.5;
+      background: #e9e9e9;
+    }
+
+    .drop-zone {
+      border: 2px dashed #ccc;
+    }
+
+    .drop-zone.drag-over {
+      background: #e3f2fd;
+      border-color: #2196F3;
+    }
+
+    h3 {
+      margin-top: 0;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="draggable-items">
+      <h3>Draggable Items</h3>
+      <div class="draggable" draggable="true">Item 1</div>
+      <div class="draggable" draggable="true">Item 2</div>
+      <div class="draggable" draggable="true">Item 3</div>
+    </div>
+
+    <div class="drop-zone">
+      <h3>Drop Zone</h3>
+    </div>
+  </div>
+
+  <script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const draggables = document.querySelectorAll('.draggable');
+      const dropZones = document.querySelectorAll('.drop-zone');
+
+      // Initialize draggable items
+      draggables.forEach(draggable => {
+        // Handle drag start
+        draggable.addEventListener('dragstart', (e) => {
+          draggable.classList.add('dragging');
+          e.dataTransfer.setData('text/plain', draggable.innerHTML);
+
+          // Set drag effect
+          e.dataTransfer.effectAllowed = 'move';
+        });
+
+        // Handle drag end
+        draggable.addEventListener('dragend', () => {
+          draggable.classList.remove('dragging');
+        });
+
+      });
+
+
+      // Initialize drop zones
+      dropZones.forEach(zone => {
+        // Handle drag enter
+        zone.addEventListener('dragenter', (e) => {
+          e.preventDefault();
+          zone.classList.add('drag-over');
+        });
+
+        // Handle drag over
+        zone.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+        });
+
+        // Handle drag leave
+        zone.addEventListener('dragleave', () => {
+          zone.classList.remove('drag-over');
+        });
+
+        // Handle drop
+        zone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          zone.classList.remove('drag-over');
+
+          // Get the dragged content
+          const data = e.dataTransfer.getData('text/plain');
+
+          // Create new draggable element
+          const newDraggable = document.createElement('div');
+          newDraggable.className = 'draggable';
+          newDraggable.draggable = true;
+          newDraggable.innerHTML = data;
+
+          // Add drag event listeners to new element
+          newDraggable.addEventListener('dragstart', (e) => {
+            newDraggable.classList.add('dragging');
+            e.dataTransfer.setData('text/plain', newDraggable.innerHTML);
+            e.dataTransfer.effectAllowed = 'move';
+          });
+
+          newDraggable.addEventListener('dragend', () => {
+            newDraggable.classList.remove('dragging');
+          });
+
+          // Add to drop zone
+          zone.appendChild(newDraggable);
+        });
+      });
+    });
+
+  
+  </script>
+</body>
+</html>

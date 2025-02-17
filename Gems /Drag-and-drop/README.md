@@ -1,4 +1,4 @@
-Voi explica acest cod JavaScript care implementează funcționalitatea de drag and drop (tragere și plasare):
+# Drag And Drop
 
 1. Codul începe prin adăugarea unui listener pentru evenimentul 'DOMContentLoaded', care se declanșează când documentul HTML este complet încărcat:
 

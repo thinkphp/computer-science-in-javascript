@@ -1,8 +1,6 @@
 ```
 e.dataTransfer.setData('text/plain', draggable.innerHTML);
 
-
-Edit
 ```
 Această linie de cod face parte din API-ul HTML5 Drag and Drop și are rolul de a salva datele în timpul operației de tragere (drag). Să o analizăm în detaliu:
 

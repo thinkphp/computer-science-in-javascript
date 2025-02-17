@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .progress-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 30px;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            transition: width 0.5s ease-in-out;
+            position: relative;
+        }
+
+        .progress-text {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .controls {
+            text-align: center;
+            margin: 20px;
+        }
+
+        button {
+            padding: 8px 16px;
+            margin: 0 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-container">
+        <div class="progress-bar">
+            <div class="progress-text">0%</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button onclick="updateProgress(10)">+10%</button>
+        <button onclick="updateProgress(-10)">-10%</button>
+        <button onclick="resetProgress()">Reset</button>
+        <button onclick="startAutoProgress()">Auto Progress</button>
+    </div>
+
+    <script>
+        let currentProgress = 0;
+        let progressInterval;
+        const progressBar = document.querySelector('.progress-bar');
+        const progressText = document.querySelector('.progress-text');
+
+        function updateProgress(amount) {
+            currentProgress = Math.min(Math.max(currentProgress + amount, 0), 100);
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            progressBar.style.width = `${currentProgress}%`;
+            progressText.textContent = `${Math.round(currentProgress)}%`;
+        }
+
+        function resetProgress() {
+            currentProgress = 0;
+            updateProgressBar();
+            stopAutoProgress();
+        }
+
+        function startAutoProgress() {
+            // Clear any existing interval
+            stopAutoProgress();
+            
+            // Start new progress interval
+            progressInterval = setInterval(() => {
+                if (currentProgress < 100) {
+                    updateProgress(1);
+                } else {
+                    stopAutoProgress();
+                }
+            }, 50);
+        }
+
+        function stopAutoProgress() {
+            if (progressInterval) {
+                clearInterval(progressInterval);
+                progressInterval = null;
+            }
+        }
+    </script>
+</body>
+</html>

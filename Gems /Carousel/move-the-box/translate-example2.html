@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>translateX cu poziționare centrală</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center; /* Centrează pe orizontală */
+      align-items: center;    /* Centrează pe verticală */
+      background-color: #f0f0f0;
+    }
+
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: lightblue;
+      position: relative; /* Necesită pentru transform */
+      transition: transform 0.5s ease; /* Animație lină */
+    }
+
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="box" id="box"></div>
+  <button onclick="moveRight()">Mută spre dreapta</button>
+  <button onclick="moveLeft()">Mută spre stânga</button>
+
+  <script>
+    let translateXValue = 0; // Valoarea inițială pentru translație
+
+    function moveRight() {
+      translateXValue += 50; // Mutăm 50px spre dreapta
+      document.getElementById('box').style.transform = `translateX(${translateXValue}px)`;
+    }
+
+    function moveLeft() {
+      translateXValue -= 50; // Mutăm 50px spre stânga
+      document.getElementById('box').style.transform = `translateX(${translateXValue}px)`;
+    }
+  </script>
+</body>
+</html>

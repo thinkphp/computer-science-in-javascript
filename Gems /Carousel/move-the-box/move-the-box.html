@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .container {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .box {
+      width: 100px;
+      height: 100px;
+      background: #3498db;
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    
+    .controls {
+      display: flex;
+      gap: 10px;
+    }
+    
+    button {
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Move the Box</h2>
+    
+    <div class="box">Box</div>
+    
+    <div class="controls">
+      <button onclick="moveLeft()">Move Left</button>
+      <button onclick="moveRight()">Move Right</button>
+    </div>
+  </div>
+
+  <script>
+    let position = 0;
+    const box = document.querySelector('.box');
+    
+    function moveLeft() {
+      position -= 50;
+      box.style.transform = `translateX(${position}px)`;
+    }
+    
+    function moveRight() {
+      position += 50;
+      box.style.transform = `translateX(${position}px)`;
+    }
+  </script>
+</body>
+</html>

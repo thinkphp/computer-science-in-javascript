@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .tooltip-trigger {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted #000;
+            cursor: help;
+        }
+
+        .tooltip {
+            position: absolute;
+            background-color: #333;
+            color: white;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            z-index: 1000;
+            max-width: 200px;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip::before {
+            content: "";
+            position: absolute;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent;
+        }
+
+        .tooltip.top::before {
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-top-color: #333;
+        }
+
+        .tooltip.bottom::before {
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-bottom-color: #333;
+        }
+
+        .tooltip.left::before {
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-left-color: #333;
+        }
+
+        .tooltip.right::before {
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-right-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="tooltip-trigger" data-tooltip="This is a sample tooltip">
+        Hover over me
+    </div>
+
+    <script>
+        class Tooltip {
+            constructor() {
+                this.tooltips = document.querySelectorAll('.tooltip-trigger');
+                this.init();
+            }
+
+            init() {
+                this.tooltips.forEach(trigger => {
+                    const tooltipText = trigger.getAttribute('data-tooltip');
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'tooltip';
+                    tooltip.textContent = tooltipText;
+                    trigger.appendChild(tooltip);
+
+                    trigger.addEventListener('mouseenter', () => this.showTooltip(trigger, tooltip));
+                    trigger.addEventListener('mouseleave', () => this.hideTooltip(tooltip));
+                });
+            }
+
+            showTooltip(trigger, tooltip) {
+                const triggerRect = trigger.getBoundingClientRect();
+                const tooltipRect = tooltip.getBoundingClientRect();
+                const spacing = 10;
+
+                // Calculate available space in different directions
+                const spaceAbove = triggerRect.top;
+                const spaceBelow = window.innerHeight - triggerRect.bottom;
+                const spaceLeft = triggerRect.left;
+                const spaceRight = window.innerWidth - triggerRect.right;
+
+                // Determine the best position
+                let position;
+                if (spaceAbove > tooltipRect.height + spacing) {
+                    position = 'top';
+                    tooltip.style.bottom = '100%';
+                    tooltip.style.left = '50%';
+                    tooltip.style.transform = 'translateX(-50%)';
+                } else if (spaceBelow > tooltipRect.height + spacing) {
+                    position = 'bottom';
+                    tooltip.style.top = '100%';
+                    tooltip.style.left = '50%';
+                    tooltip.style.transform = 'translateX(-50%)';
+                } else if (spaceLeft > tooltipRect.width + spacing) {
+                    position = 'left';
+                    tooltip.style.right = '100%';
+                    tooltip.style.top = '50%';
+                    tooltip.style.transform = 'translateY(-50%)';
+                } else {
+                    position = 'right';
+                    tooltip.style.left = '100%';
+                    tooltip.style.top = '50%';
+                    tooltip.style.transform = 'translateY(-50%)';
+                }
+
+                tooltip.className = `tooltip ${position}`;
+                tooltip.style.visibility = 'visible';
+                tooltip.style.opacity = '1';
+            }
+
+            hideTooltip(tooltip) {
+                tooltip.style.visibility = 'hidden';
+                tooltip.style.opacity = '0';
+            }
+        }
+
+        // Initialize tooltips
+        document.addEventListener('DOMContentLoaded', () => {
+            new Tooltip();
+        });
+    </script>
+</body>
+</html>

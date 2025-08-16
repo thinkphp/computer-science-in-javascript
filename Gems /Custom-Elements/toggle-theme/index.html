@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Theme Toggle Web Component</title>
+    <style>
+        :root {
+            --background-color: #ffffff;
+            --text-color: #333333;
+            --secondary-bg: #f0f0f0;
+            --border-color: #dddddd;
+            --link-color: #0066cc;
+        }
+
+        [data-theme="dark"] {
+            --background-color: #1a1a1a;
+            --text-color: #ffffff;
+            --secondary-bg: #2d2d2d;
+            --border-color: #404040;
+            --link-color: #66b3ff;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .card {
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            margin: 10px;
+        }
+
+        a {
+            color: var(--link-color);
+        }
+    </style>
+</head>
+<body>
+    <theme-toggle></theme-toggle>
+
+    <div class="card">
+        <h1>Dark Mode Example</h1>
+        <p>This is some sample content to demonstrate the dark mode functionality.</p>
+        <a href="#">Sample Link</a>
+    </div>
+    <script src="toggle-theme.js"></script>
+</body>
+</html>
